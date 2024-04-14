@@ -17,10 +17,8 @@ definePageMeta({
       :ui="{ body: { base: 'w-full' }, ring: 'ring-2 ring-zinc-800 dark:ring-zinc-200', shadow: 'shadow-md shadow-zinc-200/40', divide: 'divide-zinc-800 dark:divide-zinc-200', rounded: 'rounded-lg', background: 'bg-zinc-50/60 dark:bg-zinc-800/60' }"
     >
       <template #header>
-        게러지 현황<br>
-        리스트 양식 있어야 함<br>
         클릭하면 위치 이동 또는 상태변경 툴팁 표시
-        <div>
+        <div class="p-3">
           작은 입구쪽
         </div>
         <div class="grid grid-rows-11 grid-flow-col grid-cols-9 gap-2">
@@ -321,7 +319,7 @@ definePageMeta({
           />
         </div>
       </template>
-      <div>
+      <div class="p-3">
         화장실쪽
       </div>
       <div class="grid grid-rows-11 grid-flow-col grid-cols-10 gap-2">
@@ -546,7 +544,7 @@ definePageMeta({
         />
       </div>
       <template #footer>
-        <div>
+        <div class="p-3">
           야외
         </div>
         <div class="grid grid-rows-13 grid-flow-col grid-cols-2 gap-2">
@@ -635,8 +633,8 @@ definePageMeta({
             button-text-class="text-zinc-200 text-xs break-all mx-1.5"
             :button-text="'6'"
           />
-          <div class="flex justify-center items-center row-span-12 col-start-2">
-            게러지
+          <div class="flex justify-center items-center row-span-12 row-start-2 col-start-2 border-2 rounded-md mx-2">
+            게러지 건물
           </div>
         </div>
       </template>
