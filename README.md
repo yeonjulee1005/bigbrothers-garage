@@ -1,3 +1,3 @@
-![Monitor Testing](./.github/assets/dewdew_monitors_test.webp)
+![Bigbrothers Garage Monitor System](./.github/assets/bigbro_garage.webp)
 
-# Monitors Testing
+# Bigbrothers Garage Monitor System
