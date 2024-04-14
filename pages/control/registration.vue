@@ -13,5 +13,6 @@ definePageMeta({
 <template>
   <div>
     게러지 등록
+    리스트 양식 있어야 함<br>
   </div>
 </template>
