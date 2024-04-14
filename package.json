@@ -1,0 +1,57 @@
+{
+  "name": "bigbrothers-garage-nuxt",
+  "author": {
+    "name": "Dewdew",
+    "email": "yeonju.lee1005@gmail.com"
+  },
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --port 7000",
+    "dev:host": "nuxt dev --port 7000 --host",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "analyze": "nuxt analyze",
+    "postinstall": "nuxt prepare",
+    "cleanup": "nuxt cleanup",
+    "lint": "eslint --ext .ts,.js,.vue",
+    "test": "vitest",
+    "upgrade:force": "nuxt upgrade --force",
+    "supabase:login": "supabase login",
+    "supabase:type": "supabase gen types typescript --project-id ldfswsxditdnzyzmdcxr --schema public > types/supabase.ts"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "nuxt": "^3.11.2",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^1.1.5",
+    "@nuxt/eslint": "^0.3.6",
+    "@nuxt/image": "^1.5.0",
+    "@nuxt/ui": "^2.15.1",
+    "@nuxt/ui-pro": "^1.1.0",
+    "@nuxtjs/device": "^3.1.1",
+    "@nuxtjs/stylelint-module": "^5.2.0",
+    "@nuxtjs/supabase": "^1.2.0",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "@pinia/nuxt": "^0.5.1",
+    "@vercel/analytics": "^1.2.2",
+    "@vercel/speed-insights": "^1.0.10",
+    "@vueuse/nuxt": "^10.9.0",
+    "dayjs-nuxt": "^2.1.9",
+    "eslint": "^9.0.0",
+    "nuxt-icon": "^0.6.10",
+    "nuxt-time": "^0.1.3",
+    "pinia": "^2.1.7",
+    "postcss": "^8.4.38",
+    "postcss-html": "^1.6.0",
+    "sass": "^1.74.1",
+    "stylelint": "^16.3.1",
+    "stylelint-config-recommended-scss": "^14.0.0",
+    "stylelint-config-recommended-vue": "^1.5.0",
+    "supabase": "^1.153.4"
+  }
+}
