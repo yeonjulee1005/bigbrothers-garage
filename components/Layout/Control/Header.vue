@@ -2,17 +2,12 @@
 
 const links = [
   {
-    label: '게러지 현황보기',
-    icon: 'i-maki-historic',
+    label: '주차현황/위치수정',
+    icon: 'i-maki-car-rental',
     to: '/control'
   },
   {
-    label: '게러지 위치수정',
-    icon: 'i-maki-car-rental',
-    to: '/control/edit'
-  },
-  {
-    label: '게러지 리스트등록',
+    label: '차량등록',
     icon: 'i-maki-construction',
     to: '/control/registration'
   }

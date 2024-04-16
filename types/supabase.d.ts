@@ -6,7 +6,7 @@ type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-type Database = {
+type SupabaseDataBase = {
   public: {
     Tables: {
       garagePosition: {
@@ -97,7 +97,6 @@ type Database = {
       }
       transportation: {
         Row: {
-          bagage_photo_name: string | null
           car_model: string | null
           car_number: string | null
           car_photo_name: string | null
@@ -108,6 +107,7 @@ type Database = {
           id: string
           jeju_in_date: string | null
           jeju_out_date: string | null
+          luggage_photo_name: string | null
           memo: string | null
           mobile: string | null
           name: string | null
@@ -116,7 +116,6 @@ type Database = {
           updated_at: string | null
         }
         Insert: {
-          bagage_photo_name?: string | null
           car_model?: string | null
           car_number?: string | null
           car_photo_name?: string | null
@@ -127,6 +126,7 @@ type Database = {
           id?: string
           jeju_in_date?: string | null
           jeju_out_date?: string | null
+          luggage_photo_name?: string | null
           memo?: string | null
           mobile?: string | null
           name?: string | null
@@ -135,7 +135,6 @@ type Database = {
           updated_at?: string | null
         }
         Update: {
-          bagage_photo_name?: string | null
           car_model?: string | null
           car_number?: string | null
           car_photo_name?: string | null
@@ -146,6 +145,7 @@ type Database = {
           id?: string
           jeju_in_date?: string | null
           jeju_out_date?: string | null
+          luggage_photo_name?: string | null
           memo?: string | null
           mobile?: string | null
           name?: string | null
