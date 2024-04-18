@@ -1,5 +1,9 @@
 <script setup lang="ts">
 
+const { loadKeeping } = useFetchComposable()
+const { keepingData } = storeToRefs(useKeepingStore())
+const { transportationData } = storeToRefs(useTransportationStore())
+
 useHead({
   title: '게러지 현황보기'
 })
@@ -10,11 +14,15 @@ definePageMeta({
 
 const isOpen = ref(false)
 const selectPosition = ref('')
+const selectButtonData = ref<SerializeObject | undefined>(undefined)
 
-const clickGaragePosition = (buttonText: string) => {
+const clickGaragePosition = (buttonText: string, buttonData: SerializeObject) => {
   selectPosition.value = buttonText
+  selectButtonData.value = buttonData
   isOpen.value = true
 }
+
+loadKeeping()
 
 </script>
 
@@ -27,231 +35,17 @@ const clickGaragePosition = (buttonText: string) => {
       <template #header>
         클릭하면 위치 이동 또는 상태변경 모달 표시
         <DisplayLeftSide
+          :keeping-data="keepingData"
           controllable
-          @click:position="(buttonText: string) => clickGaragePosition(buttonText)"
+          @click:position="(buttonText: string, buttonData: SerializeObject) => clickGaragePosition(buttonText, buttonData)"
         />
       </template>
-      <DisplayTitle title="화장실 측" />
-      <div class="grid grid-rows-11 grid-flow-col grid-cols-9 gap-2">
-        <AButton
-          class="row-span-2 row-start-4 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'3-8'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-orange-800"
-          button-color="orange"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'27'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-orange-800"
-          button-color="orange"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'28'"
-        />
-        <div class="row-span-11" />
-        <AButton
-          class="row-span-2 row-start-3 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-1'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-2'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-3'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-4'"
-        />
-        <AButton
-          class="row-span-2 row-start-4 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-5'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-6'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-7'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-8'"
-        />
-        <AButton
-          class="row-span-2 row-start-3 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-9'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-10'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-11'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-12'"
-        />
-        <AButton
-          class="row-span-2 row-start-4 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-13'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-14'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-15'"
-        />
-        <AButton
-          class="row-span-2 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'4-16'"
-        />
-        <AButton
-          class="col-span-2 col-end-10 flex justify-center items-center p-1"
-          custom-class="bg-orange-800"
-          button-color="orange"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'22'"
-        />
-        <AButton
-          class="col-span-2 col-end-10 flex justify-center items-center p-1"
-          custom-class="bg-orange-800"
-          button-color="orange"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'23'"
-        />
-        <AButton
-          class="col-span-2 col-end-10 flex justify-center items-center p-1"
-          custom-class="bg-orange-800"
-          button-color="orange"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'24'"
-        />
-        <AButton
-          class="col-span-2 col-end-10 flex justify-center items-center p-1"
-          custom-class="bg-orange-800"
-          button-color="orange"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'25'"
-        />
-        <AButton
-          class="col-span-2 col-end-10 flex justify-center items-center p-1"
-          custom-class="bg-orange-800"
-          button-color="orange"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'26'"
-        />
-        <AButton
-          class="col-span-2 col-end-10 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'3-1'"
-        />
-        <AButton
-          class="col-span-2 col-end-10 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'3-2'"
-        />
-        <AButton
-          class="col-span-2 col-end-10 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'3-3'"
-        />
-        <AButton
-          class="col-span-2 col-end-10 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'3-4'"
-        />
-        <AButton
-          class="row-span-2 row-end-12 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'3-5'"
-        />
-        <AButton
-          class="row-span-2 row-end-12 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'3-6'"
-        />
-        <AButton
-          class="row-span-2 row-end-12 flex justify-center items-center p-1"
-          custom-class="bg-indigo-900"
-          button-color="indigo"
-          button-text-class="text-zinc-200 text-xs break-all mx-1.5"
-          :button-text="'3-7'"
-        />
-      </div>
+      <DisplayRightSide
+        :keeping-data="keepingData"
+        :transportation-data="transportationData"
+        controllable
+        @click:position="(buttonText: string, buttonData: SerializeObject) => clickGaragePosition(buttonText, buttonData)"
+      />
       <template #footer>
         <DisplayTitle title="야외" />
         <div class="grid grid-rows-13 grid-flow-col grid-cols-2 gap-2">
@@ -355,6 +149,7 @@ const clickGaragePosition = (buttonText: string) => {
     >
       <div class="p-3">
         {{ selectPosition }}<br>
+        {{ selectButtonData }}<br>
         위치이동<br>
         차량 상세 수정
       </div>

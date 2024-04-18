@@ -4,10 +4,14 @@
     "controllable",
     "Defaults",
     "emits",
+    "filttered",
     "Garage",
     "Keeping",
+    "luggage",
+    "Photo",
     "Pinia",
     "Supabase",
+    "Transportaion",
     "Transporter"
   ]
 }

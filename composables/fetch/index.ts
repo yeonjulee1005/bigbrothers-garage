@@ -5,8 +5,38 @@ export const useFetchComposable = () => {
    * ! Load Data !
    */
 
+  const { keepingData } = storeToRefs(useKeepingStore())
   const { garagePosition } = storeToRefs(useGaragePositionStore())
   const { transporter, transportStatus } = storeToRefs(useTransportOptions())
+
+  const insertData = async (insertData: SerializeObject, table: string) => {
+    const { error } = await client
+      .from(table)
+      .insert(insertData)
+
+    if (error) {
+      return error
+    }
+  }
+
+  const upsertData = async (upsertData: SerializeObject, table: string) => {
+    const { error } = await client
+      .from(table)
+      .upsert(upsertData)
+
+    if (error) {
+      return error
+    }
+  }
+
+  const loadKeeping = async () => {
+    const { data }: SerializeObject = await useFetch('/api/keeping', {
+      headers: useRequestHeaders(['cookie']),
+      immediate: true
+    })
+
+    keepingData.value = data.value
+  }
 
   const loadGaragePosition = async () => {
     const { data }: SerializeObject = await useFetch('/api/garagePosition', {
@@ -57,6 +87,9 @@ export const useFetchComposable = () => {
   }
 
   return {
+    insertData,
+    upsertData,
+    loadKeeping,
     loadGaragePosition,
     loadTransporter,
     loadTransportStatus,

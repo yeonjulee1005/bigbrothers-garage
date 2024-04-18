@@ -2,9 +2,11 @@
 
 const props = withDefaults(
   defineProps<{
+    keepingData?: null,
     controllable?: boolean
   }>(),
   {
+    keepingData: null,
     controllable: false
   }
 )
@@ -20,6 +22,8 @@ const clickPositionButton = (buttonText: string) => {
   emits('click:position', buttonText)
 }
 
+console.log('left side', props.keepingData)
+
 </script>
 
 <template>
@@ -28,12 +32,20 @@ const clickPositionButton = (buttonText: string) => {
     <div class="grid grid-rows-11 grid-flow-col grid-cols-9 gap-2">
       <AButton
         class="col-span-2 flex justify-center items-center p-1"
-        custom-class="bg-orange-800"
+        custom-class=""
         button-color="orange"
         button-text-class="text-zinc-200 text-xs break-all mx-1.5"
         :button-text="'10'"
         @click:button="clickPositionButton('GP010')"
       />
+      <!-- <AButton
+        class="col-span-2 flex justify-center items-center p-1"
+        custom-class="bg-orange-800"
+        button-color="orange"
+        button-text-class="text-zinc-200 text-xs break-all mx-1.5"
+        :button-text="'10'"
+        @click:button="clickPositionButton('GP010')"
+      /> -->
       <AButton
         class="col-span-2 flex justify-center items-center p-1"
         custom-class="bg-orange-800"

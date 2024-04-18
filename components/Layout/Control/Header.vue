@@ -7,6 +7,11 @@ const links = [
     to: '/control'
   },
   {
+    label: '차량 리스트',
+    icon: 'i-maki-library',
+    to: '/control/carList'
+  },
+  {
     label: '차량등록',
     icon: 'i-maki-construction',
     to: '/control/registration'

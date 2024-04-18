@@ -51,6 +51,7 @@ type SupabaseDataBase = {
           mobile: string | null
           name: string | null
           start_date: string | null
+          transport_status: string | null
           updated_at: string | null
         }
         Insert: {
@@ -67,6 +68,7 @@ type SupabaseDataBase = {
           mobile?: string | null
           name?: string | null
           start_date?: string | null
+          transport_status?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -83,6 +85,7 @@ type SupabaseDataBase = {
           mobile?: string | null
           name?: string | null
           start_date?: string | null
+          transport_status?: string | null
           updated_at?: string | null
         }
         Relationships: [
@@ -91,6 +94,13 @@ type SupabaseDataBase = {
             columns: ['garage_position']
             isOneToOne: false
             referencedRelation: 'garagePosition'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'public_keeping_transport_status_fkey'
+            columns: ['transport_status']
+            isOneToOne: false
+            referencedRelation: 'transportStatus'
             referencedColumns: ['id']
           },
         ]
@@ -102,15 +112,15 @@ type SupabaseDataBase = {
           car_photo_name: string | null
           created_at: string
           deleted: boolean | null
+          end_date: string | null
           extra_photo_name: string | null
           garage_position: string | null
           id: string
-          jeju_in_date: string | null
-          jeju_out_date: string | null
           luggage_photo_name: string | null
           memo: string | null
           mobile: string | null
           name: string | null
+          start_date: string | null
           transport_status: string | null
           transporter: string | null
           updated_at: string | null

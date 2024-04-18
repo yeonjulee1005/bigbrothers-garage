@@ -4,6 +4,9 @@ import { format } from 'date-fns'
 import {ko} from 'date-fns/locale'
 import type { FormSubmitEvent } from '#ui/types'
 
+const toast = useToast()
+
+const { insertData } = useFetchComposable()
 const { garagePosition } = storeToRefs(useGaragePositionStore())
 const { transporter, transportStatus } = storeToRefs(useTransportOptions())
 
@@ -14,11 +17,6 @@ useHead({
 definePageMeta({
   layout: 'control'
 })
-
-const emits = defineEmits([
-  'create:article',
-  'close:dialog'
-])
 
 const schema = object({
   garagePosition: string()
@@ -47,25 +45,87 @@ const formData = reactive({
   mobile: undefined,
   memo: undefined,
   startDate: undefined,
-  endDate: undefined
+  endDate: undefined,
+  carPhotoName: '',
+  extraPhotoName: '',
+  luggagePhotoName: ''
 })
 
 const isKeeping = ref(false)
-const imageUploadDialogTrigger = ref(false)
+const carImageUploadDialogTrigger = ref(false)
+const luggageImageUploadDialogTrigger = ref(false)
+const extraImageUploadDialogTrigger = ref(false)
 
-console.log(garagePosition.value)
-console.log(transporter.value)
-console.log(transportStatus.value)
-
-const submitImage = (bucketName: string, imageUrl:string) => {
-  console.log(bucketName)
-  console.log(imageUrl)
+const submitImage = (bucketName: string, imageUrl: string) => {
+  switch (bucketName) {
+    case 'car_photo' :
+      formData.carPhotoName = imageUrl
+      break
+    case 'extra_photo' :
+      formData.extraPhotoName = imageUrl
+      break
+    case 'luggage_photo' :
+      formData.luggagePhotoName = imageUrl
+      break
+  }
 }
 
 const onSubmit = async (event: FormSubmitEvent<Schema>) => {
-  console.log(event.data)
   if (!event.isTrusted) { return }
-  emits('create:article', event.data)
+
+  isKeeping.value
+    ? await createKeepingData()
+    : await createTransportationData()
+}
+
+const createKeepingData = async () => {
+
+  const data = {
+    garage_position: formData.garagePosition,
+    car_number: formData.carNumber,
+    car_model: formData.carModel,
+    name: formData.name,
+    mobile: formData.mobile,
+    start_date: formData.startDate,
+    end_date: formData.endDate,
+    memo: formData.memo,
+    car_photo_name: formData.carPhotoName,
+    extra_photo_name: formData.extraPhotoName,
+    transport_status: formData.transportStatus
+  }
+
+  const error = await insertData(data, 'keeping')
+
+  if (!error) {
+    navigateTo('/control')
+    toast.add({ title: '보관차량 등록에 성공하였습니다.', color: 'emerald', timeout: 3000 })
+  }
+}
+
+const createTransportationData = async () => {
+
+  const data = {
+    garage_position: formData.garagePosition,
+    car_number: formData.carNumber,
+    car_model: formData.carModel,
+    name: formData.name,
+    mobile: formData.mobile,
+    start_date: formData.startDate,
+    end_date: formData.endDate,
+    memo: formData.memo,
+    car_photo_name: formData.carPhotoName,
+    luggage_photo_name: formData.luggagePhotoName,
+    extra_photo_name: formData.extraPhotoName,
+    transport_status: formData.transportStatus,
+    transporter: formData.transporter
+  }
+
+  const error = await insertData(data, 'transportation')
+
+  if (!error) {
+    navigateTo('/control')
+    toast.add({ title: '운송차량 등록에 성공하였습니다.', color: 'emerald', timeout: 3000 })
+  }
 }
 
 </script>
@@ -73,7 +133,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
 <template>
   <div class="flex flex-col justify-center items-center">
     <BGCard
-      class="flex flex-col w-[90%] m-4"
+      class="flex flex-col md:w-[600px] w-[90%] m-4"
       :ui="{ body: { base: 'w-full' }, ring: 'ring-2 ring-zinc-800 dark:ring-zinc-200', shadow: 'shadow-md shadow-zinc-200/40', divide: 'divide-zinc-800 dark:divide-zinc-200', rounded: 'rounded-lg', background: 'bg-zinc-50/60 dark:bg-zinc-800/60' }"
     >
       <BGForm
@@ -91,7 +151,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
           <BGCheckbox
             v-model="isKeeping"
             color="primary"
-            label="보관여부"
+            label="보관차량"
             help="보관여부에 따른 등록항목 구분을 위해 먼저 선택해줘야 해요!"
             :ui="{ background: 'dark:bg-zinc-800/60' }"
           />
@@ -112,14 +172,13 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
           />
         </BGFormGroup>
         <BGFormGroup
-          v-if="!isKeeping"
           :label="'운송상태'"
           name="transportStatus"
           size="lg"
         >
           <BGSelect
             v-model="formData.transportStatus"
-            :options="garagePosition"
+            :options="transportStatus"
             color="primary"
             value-attribute="id"
             option-attribute="code_name"
@@ -173,9 +232,11 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
           size="lg"
           required
         >
-          <BGInput
+          <BGTextarea
             v-model="formData.memo"
             color="red"
+            autoresize
+            :rows="4"
             :placeholder="'메모를 입력해라'"
             aria-label="memo"
           />
@@ -195,7 +256,6 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
               icon-name="i-heroicons-calendar-days-20-solid"
               :button-text="formData.startDate ? format(formData.startDate, 'MMM do, yyyy', { locale: ko }) : '선택해줘'"
             />
-
             <template #panel="{ close }">
               <ADatePicker
                 v-model="formData.startDate"
@@ -220,7 +280,6 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
               icon-name="i-heroicons-calendar-days-20-solid"
               :button-text="formData.endDate ? format(formData.endDate, 'MMM do, yyyy', { locale: ko }) : '선택해줘'"
             />
-
             <template #panel="{ close }">
               <ADatePicker
                 v-model="formData.endDate"
@@ -260,14 +319,68 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
           size="lg"
         >
           <AButton
+            v-if="!formData.carPhotoName"
             :button-text="'이미지 업로드'"
-            @click:button="() => imageUploadDialogTrigger = true"
+            @click:button="() => carImageUploadDialogTrigger = true"
+          />
+          <BGInput
+            v-else
+            v-model="formData.carPhotoName.split('car_photo/')[1]"
+            color="red"
+            readonly
           />
           <DialogImageUpload
-            v-model:dialog-trigger="imageUploadDialogTrigger"
+            v-model:dialog-trigger="carImageUploadDialogTrigger"
             bucket-name="car_photo"
             @submit:image="(imageUrl: string) => submitImage('car_photo', imageUrl)"
-            @close:dialog="(trigger:boolean) => imageUploadDialogTrigger = trigger"
+            @close:dialog="(trigger:boolean) => carImageUploadDialogTrigger = trigger"
+          />
+        </BGFormGroup>
+        <BGFormGroup
+          v-if="!isKeeping"
+          :label="'짐 이미지'"
+          name="luggagePhotoName"
+          size="lg"
+        >
+          <AButton
+            v-if="!formData.luggagePhotoName"
+            :button-text="'이미지 업로드'"
+            @click:button="() => luggageImageUploadDialogTrigger = true"
+          />
+          <BGInput
+            v-else
+            v-model="formData.luggagePhotoName.split('luggage_photo/')[1]"
+            color="red"
+            readonly
+          />
+          <DialogImageUpload
+            v-model:dialog-trigger="luggageImageUploadDialogTrigger"
+            bucket-name="luggage_photo"
+            @submit:image="(imageUrl: string) => submitImage('luggage_photo', imageUrl)"
+            @close:dialog="(trigger:boolean) => luggageImageUploadDialogTrigger = trigger"
+          />
+        </BGFormGroup>
+        <BGFormGroup
+          :label="'옵션 이미지'"
+          name="extraPhotoName"
+          size="lg"
+        >
+          <AButton
+            v-if="!formData.extraPhotoName"
+            :button-text="'이미지 업로드'"
+            @click:button="() => extraImageUploadDialogTrigger = true"
+          />
+          <BGInput
+            v-else
+            v-model="formData.extraPhotoName.split('extra_photo/')[1]"
+            color="red"
+            readonly
+          />
+          <DialogImageUpload
+            v-model:dialog-trigger="extraImageUploadDialogTrigger"
+            bucket-name="extra_photo"
+            @submit:image="(imageUrl: string) => submitImage('extra_photo', imageUrl)"
+            @close:dialog="(trigger:boolean) => extraImageUploadDialogTrigger = trigger"
           />
         </BGFormGroup>
         <div class="flex justify-end">
