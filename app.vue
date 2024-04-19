@@ -3,6 +3,12 @@ import { SpeedInsights } from '@vercel/speed-insights/vue'
 
 const { meta, fullPath } = useRoute()
 
+const { loadGaragePosition, loadTransporter, loadTransportStatus } = useFetchComposable()
+
+loadGaragePosition()
+loadTransporter()
+loadTransportStatus()
+
 if (import.meta.server) {
   useHead({
     title: (meta.title as string) ?? '빅브라더스 게러지',

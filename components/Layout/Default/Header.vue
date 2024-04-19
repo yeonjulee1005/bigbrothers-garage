@@ -5,11 +5,6 @@ const links = [
     label: '게러지 현황',
     icon: 'i-maki-parking-garage',
     to: '/'
-  },
-  {
-    label: '보관 리스트',
-    icon: 'i-maki-library',
-    to: '/carList'
   }
 ]
 

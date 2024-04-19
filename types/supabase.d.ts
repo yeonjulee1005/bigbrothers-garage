@@ -6,7 +6,7 @@ type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-type Database = {
+type SupabaseDataBase = {
   public: {
     Tables: {
       garagePosition: {
@@ -51,6 +51,7 @@ type Database = {
           mobile: string | null
           name: string | null
           start_date: string | null
+          transport_status: string | null
           updated_at: string | null
         }
         Insert: {
@@ -67,6 +68,7 @@ type Database = {
           mobile?: string | null
           name?: string | null
           start_date?: string | null
+          transport_status?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -83,6 +85,7 @@ type Database = {
           mobile?: string | null
           name?: string | null
           start_date?: string | null
+          transport_status?: string | null
           updated_at?: string | null
         }
         Relationships: [
@@ -93,30 +96,36 @@ type Database = {
             referencedRelation: 'garagePosition'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'public_keeping_transport_status_fkey'
+            columns: ['transport_status']
+            isOneToOne: false
+            referencedRelation: 'transportStatus'
+            referencedColumns: ['id']
+          },
         ]
       }
       transportation: {
         Row: {
-          bagage_photo_name: string | null
           car_model: string | null
           car_number: string | null
           car_photo_name: string | null
           created_at: string
           deleted: boolean | null
+          end_date: string | null
           extra_photo_name: string | null
           garage_position: string | null
           id: string
-          jeju_in_date: string | null
-          jeju_out_date: string | null
+          luggage_photo_name: string | null
           memo: string | null
           mobile: string | null
           name: string | null
+          start_date: string | null
           transport_status: string | null
           transporter: string | null
           updated_at: string | null
         }
         Insert: {
-          bagage_photo_name?: string | null
           car_model?: string | null
           car_number?: string | null
           car_photo_name?: string | null
@@ -127,6 +136,7 @@ type Database = {
           id?: string
           jeju_in_date?: string | null
           jeju_out_date?: string | null
+          luggage_photo_name?: string | null
           memo?: string | null
           mobile?: string | null
           name?: string | null
@@ -135,7 +145,6 @@ type Database = {
           updated_at?: string | null
         }
         Update: {
-          bagage_photo_name?: string | null
           car_model?: string | null
           car_number?: string | null
           car_photo_name?: string | null
@@ -146,6 +155,7 @@ type Database = {
           id?: string
           jeju_in_date?: string | null
           jeju_out_date?: string | null
+          luggage_photo_name?: string | null
           memo?: string | null
           mobile?: string | null
           name?: string | null

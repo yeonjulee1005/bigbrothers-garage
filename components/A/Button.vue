@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ButtonSize, ButtonVariant } from '#ui/types'
 
 withDefaults(
   defineProps<{
@@ -8,8 +9,8 @@ withDefaults(
     buttonPadding?: boolean,
     buttonBlock?: boolean,
     buttonColor?: string,
-    buttonSize?: string | undefined,
-    buttonVariant?: string | undefined,
+    buttonSize?: ButtonSize | undefined,
+    buttonVariant?: ButtonVariant | undefined,
     buttonLabel?: string,
     useLeading?: boolean,
     iconName?: string,

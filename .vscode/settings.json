@@ -1,3 +1,18 @@
 {
-  "eslint.experimental.useFlatConfig": true
+  "eslint.experimental.useFlatConfig": true,
+  "cSpell.words": [
+    "controllable",
+    "Defaults",
+    "emits",
+    "filttered",
+    "Garage",
+    "Keeping",
+    "luggage",
+    "Photo",
+    "Pinia",
+    "Supabase",
+    "toast",
+    "Transportaion",
+    "Transporter"
+  ]
 }
