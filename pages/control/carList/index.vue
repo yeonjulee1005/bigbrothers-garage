@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 useHead({
-  title: '게러지 위치수정'
+  title: '보관차량 리스트'
 })
 
 definePageMeta({
@@ -12,6 +12,6 @@ definePageMeta({
 
 <template>
   <div>
-    게러지 위치 수정
+    보관 리스트
   </div>
 </template>

@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '@nuxt/devtools',
     '@nuxtjs/device',
     '@nuxtjs/stylelint-module',
+    '@nuxtjs/supabase',
     'nuxt-icon',
     'nuxt-time',
     '@vueuse/nuxt',
@@ -58,6 +59,32 @@ export default defineNuxtConfig({
     storesDirs: [
       './stores/**'
     ]
+  },
+  supabase: {
+    redirect: false,
+    // redirectOptions: {
+    //   login: '/login',
+    //   callback: '/confirm',
+    //   exclude: [
+    //     '/',
+    //     '/tech',
+    //     '/tech/*',
+    //     '/blog',
+    //     '/blog/*',
+    //     '/projects',
+    //     '/projects/*',
+    //     '/archives',
+    //     '/archives/*'
+    //   ]
+    // },
+    clientOptions: {
+      auth: {
+        flowType: 'pkce',
+        detectSessionInUrl: true,
+        persistSession: true,
+        autoRefreshToken: true
+      }
+    }
   },
   vite: {
     build: {

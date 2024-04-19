@@ -4,7 +4,7 @@
     "name": "Dewdew",
     "email": "yeonju.lee1005@gmail.com"
   },
-  "version": "0.0.3",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -25,7 +25,8 @@
     "ajv": "^8.12.0",
     "nuxt": "^3.11.2",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@iconify-json/maki": "^1.1.24",
@@ -42,6 +43,7 @@
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
     "@vueuse/nuxt": "^10.9.0",
+    "date-fns": "^3.6.0",
     "dayjs-nuxt": "^2.1.9",
     "eslint": "^9.0.0",
     "nuxt-icon": "^0.6.10",
@@ -53,6 +55,7 @@
     "stylelint": "^16.3.1",
     "stylelint-config-recommended-scss": "^14.0.0",
     "stylelint-config-recommended-vue": "^1.5.0",
-    "supabase": "^1.153.4"
+    "supabase": "^1.153.4",
+    "v-calendar": "next"
   }
 }
