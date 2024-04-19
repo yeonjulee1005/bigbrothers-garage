@@ -1,40 +1,3 @@
-<template>
-  <ADialog
-    :dialog-trigger="dialogTrigger"
-    :title="'이미지 업로드'"
-    :double-first-text="'저장'"
-    :double-second-text="'닫기'"
-    @click-first-button="submitImage"
-    @click-second-button="closeDialog(false)"
-    @close-dialog="closeDialog(false)"
-  >
-    <div class="flex flex-col gap-4">
-      <BGFormGroup :label="'업로드'">
-        <BGInput
-          type="file"
-          :ui="{ file: { base: 'dark:file:bg-zinc-800/60 dark:hover:file:bg-zinc-700/50' }}"
-          @change="uploadFile"
-        >
-          <template #trailing>
-            <Icon name="line-md:cloud-upload-outline-loop" />
-          </template>
-        </BGInput>
-      </BGFormGroup>
-      <NuxtImg
-        v-if="exportUrl"
-        class="image-preview"
-        :src="exportUrl"
-        width="300"
-        height="200"
-        fit="cover"
-        alt="image-prev"
-        :draggable="false"
-        @contextmenu.prevent
-      />
-    </div>
-  </ADialog>
-</template>
-
 <script setup lang="ts">
 
 const { loadStorage, uploadStorage } = useFetchComposable()
@@ -113,3 +76,40 @@ const closeDialog = (trigger:boolean) => {
 }
 
 </script>
+
+<template>
+  <ADialog
+    :dialog-trigger="dialogTrigger"
+    :title="'이미지 업로드'"
+    :double-first-text="'저장'"
+    :double-second-text="'닫기'"
+    @click-first-button="submitImage"
+    @click-second-button="closeDialog(false)"
+    @close-dialog="closeDialog(false)"
+  >
+    <div class="flex flex-col gap-4">
+      <BGFormGroup :label="'업로드'">
+        <BGInput
+          type="file"
+          :ui="{ file: { base: 'dark:file:bg-zinc-800/60 dark:hover:file:bg-zinc-700/50' }}"
+          @change="uploadFile"
+        >
+          <template #trailing>
+            <Icon name="line-md:cloud-upload-outline-loop" />
+          </template>
+        </BGInput>
+      </BGFormGroup>
+      <NuxtImg
+        v-if="exportUrl"
+        class="image-preview"
+        :src="exportUrl"
+        width="300"
+        height="200"
+        fit="cover"
+        alt="image-prev"
+        :draggable="false"
+        @contextmenu.prevent
+      />
+    </div>
+  </ADialog>
+</template>

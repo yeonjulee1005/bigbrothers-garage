@@ -16,12 +16,20 @@ defineEmits([
 
 const buttonBackgroundColor = () => {
   if (!props.buttonData) { return '' }
-  return props.buttonData.transportStatus.code === 'TSP005' ? 'bg-orange-800' : 'bg-indigo-900'
+
+  switch (props.buttonData.transportStatus.code) {
+    case 'TSP005' :
+      return 'bg-orange-800'
+    case 'TSP002' :
+      return 'bg-indigo-900'
+    default:
+      return ''
+  }
 }
 
 const buttonColor = () => {
   if (!props.buttonData) { return 'lime' }
-  return props.buttonData.transportStatus.code === 'TSP005' ? 'orange' : 'indigo'
+  return props.buttonData.transportStatus.code === 'TSP005' || props.buttonData.transportStatus.code === 'TSP006' ? 'orange' : 'indigo'
 }
 
 </script>

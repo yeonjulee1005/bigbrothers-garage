@@ -1,3 +1,44 @@
+<script setup lang="ts">
+import { object, string, type InferType } from 'yup'
+import type { FormSubmitEvent } from '#ui/types'
+
+const createArticleTrigger = defineModel('dialogTrigger', {
+  type: Boolean,
+  default: false
+})
+
+const emits = defineEmits([
+  'create:article',
+  'close:dialog'
+])
+
+const schema = object({
+  title: string()
+    .required('제목이 필요해'),
+  desc: string()
+    .required('다른게 필요해')
+})
+
+type Schema = InferType<typeof schema>
+
+const formData = reactive({
+  title: '',
+  desc: ''
+})
+
+const imageUploadDialogTrigger = ref(false)
+
+const submitImage = (imageUrl:string) => {
+  console.log(imageUrl)
+}
+
+const onSubmit = (event: FormSubmitEvent<Schema>) => {
+  if (!event.isTrusted) { return }
+  emits('create:article', formData)
+}
+
+</script>
+
 <template>
   <ADialog
     :dialog-trigger="createArticleTrigger"
@@ -62,44 +103,3 @@
     </BGForm>
   </ADialog>
 </template>
-
-<script setup lang="ts">
-import { object, string, type InferType } from 'yup'
-import type { FormSubmitEvent } from '#ui/types'
-
-const createArticleTrigger = defineModel('dialogTrigger', {
-  type: Boolean,
-  default: false
-})
-
-const emits = defineEmits([
-  'create:article',
-  'close:dialog'
-])
-
-const schema = object({
-  title: string()
-    .required('제목이 필요해'),
-  desc: string()
-    .required('다른게 필요해')
-})
-
-type Schema = InferType<typeof schema>
-
-const formData = reactive({
-  title: '',
-  desc: ''
-})
-
-const imageUploadDialogTrigger = ref(false)
-
-const submitImage = (imageUrl:string) => {
-  console.log(imageUrl)
-}
-
-const onSubmit = (event: FormSubmitEvent<Schema>) => {
-  if (!event.isTrusted) { return }
-  emits('create:article', formData)
-}
-
-</script>

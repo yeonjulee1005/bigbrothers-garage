@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+const { width } = useWindowSize()
+
 const props = withDefaults(
   defineProps<{
     keepingData: SerializeObject[],
@@ -14,6 +16,10 @@ const props = withDefaults(
 const emits = defineEmits([
   'click:position'
 ])
+
+const computedIconSize = computed(() => {
+  return width.value < 500 ? 22 : 34
+})
 
 const clickPositionButton = (buttonText: string, buttonData: SerializeObject) => {
   if (!props.controllable) {
@@ -41,14 +47,11 @@ const selectTransportaionData = (code: string) => {
   return props.transportationData.filter((item: SerializeObject) => item.garagePosition.code === code)[0] ?? undefined
 }
 
-console.log('right side', props.keepingData)
-
 </script>
 
 <template>
   <div>
-    <DisplayTitle title="화장실 측" />
-    <div class="grid grid-rows-11 grid-flow-col grid-cols-9 gap-2">
+    <div class="grid grid-rows-11 grid-flow-col grid-cols-8 gap-2">
       <DisplayButton
         :button-data="filtteredData('TP028')"
         button-grid="row-span-2 row-start-4 flex justify-center items-center p-1"
@@ -64,10 +67,9 @@ console.log('right side', props.keepingData)
         button-grid="row-span-2 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('GP028', filtteredData('GP028'))"
       />
-      <div class="row-span-11" />
       <DisplayButton
         :button-data="filtteredData('TP029')"
-        button-grid="row-span-2 row-start-3 flex justify-center items-center p-1"
+        button-grid="row-span-2 row-start-2 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('TP029', filtteredData('TP029'))"
       />
       <DisplayButton
@@ -85,9 +87,18 @@ console.log('right side', props.keepingData)
         button-grid="row-span-2 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('TP032', filtteredData('TP032'))"
       />
+      <div class="row-span-2 row-end-12">
+        <Icon
+          class="p-1"
+          :class="width < 500 ? 'border rounded-md' : 'border-2 rounded-lg'"
+          name="maki:toilet"
+          :width="computedIconSize"
+          :height="computedIconSize"
+        />
+      </div>
       <DisplayButton
         :button-data="filtteredData('TP033')"
-        button-grid="row-span-2 row-start-4 flex justify-center items-center p-1"
+        button-grid="row-span-2 row-start-3 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('TP033', filtteredData('TP033'))"
       />
       <DisplayButton
@@ -107,7 +118,7 @@ console.log('right side', props.keepingData)
       />
       <DisplayButton
         :button-data="filtteredData('TP037')"
-        button-grid="row-span-2 row-start-3 flex justify-center items-center p-1"
+        button-grid="row-span-2 row-start-2 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('TP037', filtteredData('TP037'))"
       />
       <DisplayButton
@@ -127,7 +138,7 @@ console.log('right side', props.keepingData)
       />
       <DisplayButton
         :button-data="filtteredData('TP041')"
-        button-grid="row-span-2 row-start-4 flex justify-center items-center p-1"
+        button-grid="row-span-2 row-start-3 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('TP041', filtteredData('TP041'))"
       />
       <DisplayButton
@@ -147,47 +158,47 @@ console.log('right side', props.keepingData)
       />
       <DisplayButton
         :button-data="filtteredData('GP022')"
-        button-grid="col-span-2 col-end-10 flex justify-center items-center p-1"
+        button-grid="col-span-2 col-end-9 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('GP022', filtteredData('GP022'))"
       />
       <DisplayButton
         :button-data="filtteredData('GP023')"
-        button-grid="col-span-2 col-end-10 flex justify-center items-center p-1"
+        button-grid="col-span-2 col-end-9 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('GP023', filtteredData('GP023'))"
       />
       <DisplayButton
         :button-data="filtteredData('GP024')"
-        button-grid="col-span-2 col-end-10 flex justify-center items-center p-1"
+        button-grid="col-span-2 col-end-9 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('GP024', filtteredData('GP024'))"
       />
       <DisplayButton
         :button-data="filtteredData('GP025')"
-        button-grid="col-span-2 col-end-10 flex justify-center items-center p-1"
+        button-grid="col-span-2 col-end-9 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('GP025', filtteredData('GP025'))"
       />
       <DisplayButton
         :button-data="filtteredData('GP026')"
-        button-grid="col-span-2 col-end-10 flex justify-center items-center p-1"
+        button-grid="col-span-2 col-end-9 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('GP026', filtteredData('GP026'))"
       />
       <DisplayButton
         :button-data="filtteredData('TP021')"
-        button-grid="col-span-2 col-end-10 flex justify-center items-center p-1"
+        button-grid="col-span-2 col-end-9 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('TP021', filtteredData('TP021'))"
       />
       <DisplayButton
         :button-data="filtteredData('TP022')"
-        button-grid="col-span-2 col-end-10 flex justify-center items-center p-1"
+        button-grid="col-span-2 col-end-9 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('TP022', filtteredData('TP022'))"
       />
       <DisplayButton
         :button-data="filtteredData('TP023')"
-        button-grid="col-span-2 col-end-10 flex justify-center items-center p-1"
+        button-grid="col-span-2 col-end-9 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('TP023', filtteredData('TP023'))"
       />
       <DisplayButton
         :button-data="filtteredData('TP024')"
-        button-grid="col-span-2 col-end-10 flex justify-center items-center p-1"
+        button-grid="col-span-2 col-end-9 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('TP024', filtteredData('TP024'))"
       />
       <DisplayButton

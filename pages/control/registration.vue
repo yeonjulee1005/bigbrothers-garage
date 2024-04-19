@@ -20,17 +20,17 @@ definePageMeta({
 
 const schema = object({
   garagePosition: string()
-    .required('주차위치 선택해야해'),
+    .required('주차위치를 선택해요'),
   carNumber: string()
-    .required('차량번호좀!'),
+    .required('차량번호 입력해야죠?'),
   carModel: string()
-    .required('차량 모델을 입력해!'),
+    .required('차량 모델을 입력해요!'),
   memo: string()
-    .required('메모를 입력해줘요'),
+    .required('메모를 입력해줘요!'),
   startDate: string()
-    .required('게러지 입고일 입력해'),
+    .required('게러지 입고일 입력해줘요!'),
   endDate: string()
-    .required('게러지 출고일 입력해')
+    .required('게러지 출고일 입력해줘요!')
 })
 
 type Schema = InferType<typeof schema>
@@ -209,7 +209,7 @@ const createTransportationData = async () => {
           <BGInput
             v-model="formData.carNumber"
             color="red"
-            :placeholder="'차량번호 입력해라'"
+            :placeholder="'차량번호를 입력해요'"
             aria-label="carNumber"
           />
         </BGFormGroup>
@@ -222,7 +222,7 @@ const createTransportationData = async () => {
           <BGInput
             v-model="formData.carModel"
             color="red"
-            :placeholder="'차량모델 입력해라'"
+            :placeholder="'차량모델을 입력해요'"
             aria-label="carModel"
           />
         </BGFormGroup>
@@ -237,7 +237,7 @@ const createTransportationData = async () => {
             color="red"
             autoresize
             :rows="4"
-            :placeholder="'메모를 입력해라'"
+            :placeholder="'메모를 입력해요'"
             aria-label="memo"
           />
         </BGFormGroup>
@@ -254,7 +254,7 @@ const createTransportationData = async () => {
             <AButton
               use-leading
               icon-name="i-heroicons-calendar-days-20-solid"
-              :button-text="formData.startDate ? format(formData.startDate, 'MMM do, yyyy', { locale: ko }) : '선택해줘'"
+              :button-text="formData.startDate ? format(formData.startDate, 'MMM do, yyyy', { locale: ko }) : '입고일(시작일)을 선택해줘요'"
             />
             <template #panel="{ close }">
               <ADatePicker
@@ -278,7 +278,7 @@ const createTransportationData = async () => {
             <AButton
               use-leading
               icon-name="i-heroicons-calendar-days-20-solid"
-              :button-text="formData.endDate ? format(formData.endDate, 'MMM do, yyyy', { locale: ko }) : '선택해줘'"
+              :button-text="formData.endDate ? format(formData.endDate, 'MMM do, yyyy', { locale: ko }) : '출고일(종료일)을 선택해줘요'"
             />
             <template #panel="{ close }">
               <ADatePicker
@@ -297,7 +297,7 @@ const createTransportationData = async () => {
           <BGInput
             v-model="formData.name"
             color="red"
-            :placeholder="'성함을 입력해라'"
+            :placeholder="'성함을 입력해줘요'"
             aria-label="name"
           />
         </BGFormGroup>
@@ -309,7 +309,7 @@ const createTransportationData = async () => {
           <BGInput
             v-model="formData.mobile"
             color="red"
-            :placeholder="'연락처를 입력해라'"
+            :placeholder="'연락처를 입력해줘요'"
             aria-label="mobile"
           />
         </BGFormGroup>
@@ -320,6 +320,9 @@ const createTransportationData = async () => {
         >
           <AButton
             v-if="!formData.carPhotoName"
+            use-leading
+            icon-name="maki:scooter"
+            :icon-size="24"
             :button-text="'이미지 업로드'"
             @click:button="() => carImageUploadDialogTrigger = true"
           />
@@ -344,6 +347,9 @@ const createTransportationData = async () => {
         >
           <AButton
             v-if="!formData.luggagePhotoName"
+            use-leading
+            icon-name="maki:suitcase"
+            :icon-size="24"
             :button-text="'이미지 업로드'"
             @click:button="() => luggageImageUploadDialogTrigger = true"
           />
@@ -361,12 +367,15 @@ const createTransportationData = async () => {
           />
         </BGFormGroup>
         <BGFormGroup
-          :label="'옵션 이미지'"
+          :label="'추가적인 이미지'"
           name="extraPhotoName"
           size="lg"
         >
           <AButton
             v-if="!formData.extraPhotoName"
+            use-leading
+            icon-name="maki:police"
+            :icon-size="24"
             :button-text="'이미지 업로드'"
             @click:button="() => extraImageUploadDialogTrigger = true"
           />
