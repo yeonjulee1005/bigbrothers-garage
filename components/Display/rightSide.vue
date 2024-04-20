@@ -87,15 +87,11 @@ const selectTransportaionData = (code: string) => {
         button-grid="row-span-2 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('TP032', filtteredData('TP032'))"
       />
-      <div class="row-span-2 row-end-12">
-        <Icon
-          class="p-1"
-          :class="width < 500 ? 'border rounded-md' : 'border-2 rounded-lg'"
-          name="maki:toilet"
-          :width="computedIconSize"
-          :height="computedIconSize"
-        />
-      </div>
+      <DisplayIcon
+        grid-class="row-span-2 row-end-12"
+        display-icon-name="maki:toilet"
+        :display-icon-size="computedIconSize"
+      />
       <DisplayButton
         :button-data="filtteredData('TP033')"
         button-grid="row-span-2 row-start-3 flex justify-center items-center p-1"

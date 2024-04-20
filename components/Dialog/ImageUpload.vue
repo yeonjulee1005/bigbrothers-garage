@@ -80,9 +80,9 @@ const closeDialog = (trigger:boolean) => {
 <template>
   <ADialog
     :dialog-trigger="dialogTrigger"
-    :title="'이미지 업로드'"
-    :double-first-text="'저장'"
-    :double-second-text="'닫기'"
+    title="이미지 업로드"
+    double-first-text="저장"
+    double-second-text="닫기"
     @click-first-button="submitImage"
     @click-second-button="closeDialog(false)"
     @close-dialog="closeDialog(false)"

@@ -25,7 +25,7 @@ withDefaults(
     <Icon
       class="p-1"
       :class="width < 500 ? 'border rounded-md' : 'border-2 rounded-lg'"
-      name="maki:tunnel"
+      :name="displayIconName"
       :width="displayIconSize"
       :height="displayIconSize"
     />
