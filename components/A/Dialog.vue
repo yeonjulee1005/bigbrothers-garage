@@ -37,6 +37,14 @@ const emits = defineEmits([
   'click-second-button'
 ])
 
+const modalCardUiOption = ref({
+  ring: 'ring-1 ring-zinc-800 dark:ring-zinc-200',
+  divide: 'divide-zinc-800 dark:divide-zinc-200',
+  background: 'bg-zinc-50/60 dark:bg-stone-800/60',
+  header: { padding: 'p-2 sm:px-2' }
+})
+
+
 watch(() => props.dialogTrigger, (value) => {
   modalTrigger.value = value
 }, { immediate: true })
@@ -55,8 +63,9 @@ watch(() => modalTrigger.value, (value) => {
     :fullscreen="fullScreen"
     overlay
     :prevent-close="preventClose"
+    :ui="{width: 'w-[300px]'}"
   >
-    <BGCard :ui="{ divide: 'dark:divide-zinc-200', background: 'bg-zinc-100/60 dark:bg-neutral-900' }">
+    <BGCard :ui="modalCardUiOption">
       <template #header>
         <div
           v-if="title"

@@ -18,6 +18,19 @@ definePageMeta({
   layout: 'control'
 })
 
+const isKeeping = ref(false)
+const carImageUploadDialogTrigger = ref(false)
+const luggageImageUploadDialogTrigger = ref(false)
+const extraImageUploadDialogTrigger = ref(false)
+
+const startDateText = computed(() => {
+  return isKeeping.value ? '게러지 입고일' : '운송 시작일'
+})
+
+const endDateText = computed(() => {
+  return isKeeping.value ? '게러지 출고일' : '운송 종료일'
+})
+
 const schema = object({
   garagePosition: string()
     .required('주차위치를 선택해요'),
@@ -28,9 +41,7 @@ const schema = object({
   memo: string()
     .required('메모를 입력해줘요!'),
   startDate: string()
-    .required('게러지 입고일 입력해줘요!'),
-  endDate: string()
-    .required('게러지 출고일 입력해줘요!')
+    .required(`${startDateText.value}을 입력해줘요!`)
 })
 
 type Schema = InferType<typeof schema>
@@ -50,11 +61,6 @@ const formData = reactive({
   extraPhotoName: '',
   luggagePhotoName: ''
 })
-
-const isKeeping = ref(false)
-const carImageUploadDialogTrigger = ref(false)
-const luggageImageUploadDialogTrigger = ref(false)
-const extraImageUploadDialogTrigger = ref(false)
 
 const submitImage = (bucketName: string, imageUrl: string) => {
   switch (bucketName) {
@@ -242,7 +248,7 @@ const createTransportationData = async () => {
           />
         </BGFormGroup>
         <BGFormGroup
-          :label="'게러지 입고일'"
+          :label="startDateText"
           name="startDate"
           size="lg"
           required
@@ -254,7 +260,7 @@ const createTransportationData = async () => {
             <AButton
               use-leading
               icon-name="i-heroicons-calendar-days-20-solid"
-              :button-text="formData.startDate ? format(formData.startDate, 'MMM do, yyyy', { locale: ko }) : '입고일(시작일)을 선택해줘요'"
+              :button-text="formData.startDate ? format(formData.startDate, 'MMM do, yyyy', { locale: ko }) : `${startDateText}을 선택해줘요`"
             />
             <template #panel="{ close }">
               <ADatePicker
@@ -266,10 +272,9 @@ const createTransportationData = async () => {
           </BGPopover>
         </BGFormGroup>
         <BGFormGroup
-          :label="'게러지 출고일'"
+          :label="endDateText"
           name="endDate"
           size="lg"
-          required
         >
           <BGPopover
             :popper="{ placement: 'bottom-start' }"
@@ -278,7 +283,7 @@ const createTransportationData = async () => {
             <AButton
               use-leading
               icon-name="i-heroicons-calendar-days-20-solid"
-              :button-text="formData.endDate ? format(formData.endDate, 'MMM do, yyyy', { locale: ko }) : '출고일(종료일)을 선택해줘요'"
+              :button-text="formData.endDate ? format(formData.endDate, 'MMM do, yyyy', { locale: ko }) : `${endDateText}을 선택해줘요`"
             />
             <template #panel="{ close }">
               <ADatePicker

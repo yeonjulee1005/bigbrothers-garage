@@ -5,7 +5,7 @@ const props = withDefaults(
     modalTrigger?: boolean,
     controller?: boolean,
     modalOverlay?: boolean,
-    title?: ''
+    title?: string
   }>(),
   {
     modalTrigger: false,
@@ -23,7 +23,7 @@ const openTrigger = ref(false)
 
 const modalUiOption = computed(() => {
   return props.controller
-    ? { width: 'w-[200px]', container: 'items-center', overlay: { background: 'dark:bg-stone-800/60' } }
+    ? { width: 'w-[300px]', container: 'items-center', overlay: { background: 'dark:bg-stone-800/60' } }
     : { width: 'w-full', container: 'items-center' }
 })
 
@@ -54,8 +54,11 @@ watch(() => openTrigger.value, (value) => {
   >
     <BGCard :ui="modalCardUiOption">
       <template #header>
-        <div class="flex justify-between items-center">
-          <span v-if="title">
+        <div class="flex justify-between items-center pl-4">
+          <span
+            v-if="title"
+            class="text-lg font-bold"
+          >
             {{ title }}
           </span>
           <div v-else />

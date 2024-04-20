@@ -6,6 +6,7 @@ export const useFetchComposable = () => {
    */
 
   const { keepingData } = storeToRefs(useKeepingStore())
+  const { transportationData } = storeToRefs(useTransportationStore())
   const { garagePosition } = storeToRefs(useGaragePositionStore())
   const { transporter, transportStatus } = storeToRefs(useTransportOptions())
 
@@ -36,6 +37,15 @@ export const useFetchComposable = () => {
     })
 
     keepingData.value = data.value
+  }
+
+  const loadTransportation = async () => {
+    const { data }: SerializeObject = await useFetch('/api/transportation', {
+      headers: useRequestHeaders(['cookie']),
+      immediate: true
+    })
+
+    transportationData.value = data.value
   }
 
   const loadGaragePosition = async () => {
@@ -90,6 +100,7 @@ export const useFetchComposable = () => {
     insertData,
     upsertData,
     loadKeeping,
+    loadTransportation,
     loadGaragePosition,
     loadTransporter,
     loadTransportStatus,

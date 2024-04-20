@@ -107,11 +107,7 @@ const selectTransportaionData = (code: string) => {
         button-grid="col-span-2 flex justify-center items-center p-1"
         @click:display-button="() => clickPositionButton('GP001', filtteredData('GP001'))"
       />
-      <DisplayButton
-        :button-data="filtteredData('GP000')"
-        button-grid="col-span-2 flex justify-center items-center p-1"
-        @click:display-button="() => clickPositionButton('GP000', filtteredData('GP000'))"
-      />
+      <div class="col-span-2" />
       <DisplayButton
         :button-data="filtteredData('TP001')"
         button-grid="row-span-2 row-start-2 flex justify-center items-center p-1"
