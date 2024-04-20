@@ -18,18 +18,19 @@ const buttonBackgroundColor = () => {
   if (!props.buttonData) { return '' }
 
   switch (props.buttonData.transportStatus.code) {
-    case 'TSP005' :
-      return 'bg-orange-800'
-    case 'TSP002' :
-      return 'bg-indigo-900'
+    case 'TPS002' :
+    case 'TPS003' :
+      return 'bg-sky-700'
+    case 'TPS005' :
+      return 'bg-red-900'
     default:
       return ''
   }
 }
 
 const buttonColor = () => {
-  if (!props.buttonData) { return 'lime' }
-  return props.buttonData.transportStatus.code === 'TSP005' || props.buttonData.transportStatus.code === 'TSP006' ? 'orange' : 'indigo'
+  if (!props.buttonData) { return 'gray' }
+  return props.buttonData.garagePosition.code.includes('TP') ? 'sky' : 'red'
 }
 
 </script>

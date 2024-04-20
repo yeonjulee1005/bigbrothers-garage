@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-const { loadKeeping } = useFetchComposable()
+const { loadKeeping, loadTransportation } = useFetchComposable()
 const { keepingData } = storeToRefs(useKeepingStore())
 const { transportationData } = storeToRefs(useTransportationStore())
 
@@ -12,17 +12,24 @@ definePageMeta({
   layout: 'control'
 })
 
-const isOpen = ref(false)
 const selectPosition = ref('')
 const selectButtonData = ref<SerializeObject | undefined>(undefined)
+const controllerBoxTrigger = ref(false)
+const changePositionDialogTrigger = ref(false)
 
 const clickGaragePosition = (buttonText: string, buttonData: SerializeObject) => {
   selectPosition.value = buttonText
   selectButtonData.value = buttonData
-  isOpen.value = true
+  controllerBoxTrigger.value = true
+}
+
+const openChangePositionDialog = () => {
+  controllerBoxTrigger.value = false
+  changePositionDialogTrigger.value = true
 }
 
 loadKeeping()
+loadTransportation()
 
 </script>
 
@@ -56,17 +63,63 @@ loadKeeping()
       </template>
     </BGCard>
     <AModal
-      :modal-trigger="isOpen"
+      :modal-trigger="controllerBoxTrigger"
       controller
       modal-overlay
-      @close-dialog="() => isOpen = false"
+      :title="selectPosition"
+      @close-dialog="() => controllerBoxTrigger = false"
     >
-      <div class="p-3">
-        {{ selectPosition }}<br>
-        {{ selectButtonData }}<br>
-        위치이동<br>
-        차량 상세 수정
+      <div
+        v-if="selectButtonData"
+        class="flex flex-col justify-center items-center gap-3 p-1"
+      >
+        <NuxtImg :src="selectButtonData.car_photo_name"/>
+        <BGInput
+          readonly
+          color="red"
+          :value="selectButtonData.car_model"
+        />
+        <BGInput
+          readonly
+          color="red"
+          :value="selectButtonData.car_number"
+        />
+        <BGInput
+          readonly
+          color="red"
+          :value="selectButtonData.transportStatus.code_name"
+        />
+        <BGInput
+          v-if="selectButtonData.mobile"
+          readonly
+          color="red"
+          :value="selectButtonData.mobile"
+        />
+        <BGTextarea
+          readonly
+          color="red"
+          autoresize
+          :value="selectButtonData.memo"
+        />
+        <AButton
+          custom-class="w-full"
+          button-text="보관위치 변경"
+          @click:button="openChangePositionDialog"
+        />
+        <AButton
+          custom-class="w-full"
+          button-text="정보 수정"
+          @click:button="() => console.log(selectButtonData)"
+        />
       </div>
+      <span v-else>
+        빈자리 입니다!
+      </span>
     </AModal>
+    <DialogChangePosition
+      v-model:dialog-trigger="changePositionDialogTrigger"
+      :select-data="selectButtonData"
+      @close:dialog="(trigger:boolean) => changePositionDialogTrigger = trigger"
+    />
   </div>
 </template>

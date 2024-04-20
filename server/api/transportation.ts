@@ -4,9 +4,8 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient<SupabaseDataBase>(event)
 
   const { data, error } = await client
-    .from('garagePosition')
-    .select('id, order, code, code_name, deleted')
-    .order('order', { ascending: true })
+    .from('transportation')
+    .select('id, transporter(id, car_number, name, mobile), transportStatus(id, code, code_name), garagePosition(id, code, code_name), car_number, car_model, name, mobile, start_date, end_date, memo, car_photo_name, luggage_photo_name, extra_photo_name, deleted')
     .eq('deleted', false)
 
   if (error) {
