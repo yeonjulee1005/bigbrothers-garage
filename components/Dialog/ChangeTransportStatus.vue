@@ -31,7 +31,7 @@ watchEffect(() => {
 const submitChange = () => {
   updateData({ transport_status: selectStatus.value }, props.selectData.id, selectDatabaseTable())
   if (selectStatus.value === '0661badf-9160-4dd3-a286-9cb80d2f767b') {
-    updateData({ garage_position: null, deleted: true }, props.selectData.id, selectDatabaseTable())
+    updateData({ garage_position: '6e478ca3-de02-47c9-a320-423ae8d03a67', class: 'line-through dark:bg-red-800 animate-pulse', deleted: true }, props.selectData.id, selectDatabaseTable())
   }
   toast.add({ title: '상태변경을 성공하였습니다.', color: 'emerald', timeout: 1500 })
   go(0)

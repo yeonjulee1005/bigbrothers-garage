@@ -44,6 +44,7 @@ type SupabaseDataBase = {
           car_model: string | null
           car_number: string | null
           car_photo_name: string | null
+          class: string | null
           created_at: string
           deleted: boolean | null
           end_date: string | null
@@ -61,6 +62,7 @@ type SupabaseDataBase = {
           car_model?: string | null
           car_number?: string | null
           car_photo_name?: string | null
+          class?: string | null
           created_at?: string
           deleted?: boolean | null
           end_date?: string | null
@@ -78,6 +80,7 @@ type SupabaseDataBase = {
           car_model?: string | null
           car_number?: string | null
           car_photo_name?: string | null
+          class?: string | null
           created_at?: string
           deleted?: boolean | null
           end_date?: string | null
@@ -113,6 +116,7 @@ type SupabaseDataBase = {
           car_model: string | null
           car_number: string | null
           car_photo_name: string | null
+          class: string | null
           created_at: string
           deleted: boolean | null
           end_date: string | null
@@ -132,6 +136,7 @@ type SupabaseDataBase = {
           car_model?: string | null
           car_number?: string | null
           car_photo_name?: string | null
+          class?: string | null
           created_at?: string
           deleted?: boolean | null
           end_date?: string | null
@@ -151,6 +156,7 @@ type SupabaseDataBase = {
           car_model?: string | null
           car_number?: string | null
           car_photo_name?: string | null
+          class?: string | null
           created_at?: string
           deleted?: boolean | null
           end_date?: string | null

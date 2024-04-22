@@ -17,6 +17,15 @@ const selectPosition = ref('')
 const selectButtonData = ref<SerializeObject | undefined>(undefined)
 const controllerBoxTrigger = ref(false)
 
+const cardUiOption = {
+  body: { base: 'w-full' },
+  ring: 'ring-2 ring-zinc-800 dark:ring-zinc-200',
+  shadow: 'shadow-md shadow-zinc-200/40',
+  divide: 'divide-zinc-800 dark:divide-zinc-200',
+  rounded: 'rounded-lg',
+  background: 'bg-zinc-50/60 dark:bg-zinc-800/60'
+}
+
 const clickGaragePosition = (buttonText: string, buttonData: SerializeObject) => {
   selectPosition.value = buttonText
   selectButtonData.value = buttonData
@@ -32,7 +41,7 @@ loadTransportation(false)
   <div class="flex flex-col justify-center items-center">
     <BGCard
       class="flex flex-col lg:w-[500px] m-4"
-      :ui="{ body: { base: 'w-full' }, ring: 'ring-2 ring-zinc-800 dark:ring-zinc-200', shadow: 'shadow-md shadow-zinc-200/40', divide: 'divide-zinc-800 dark:divide-zinc-200', rounded: 'rounded-lg', background: 'bg-zinc-50/60 dark:bg-zinc-800/60' }"
+      :ui="cardUiOption"
     >
       <template #header>
         <DisplayLeftSide

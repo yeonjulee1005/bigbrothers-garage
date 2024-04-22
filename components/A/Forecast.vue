@@ -95,9 +95,13 @@ const option = {
       class="flex items-center h-[40px] w-fit"
     >
       <div
-        v-if="weatherFirstData"
+        v-if="uvData && weatherFirstData"
         class="flex gap-4"
       >
+        <AIconText
+          :use-icon="false"
+          :text="uvData.location"
+        />
         <AIconText
           :custom-class="weatherColor(weatherFirstData.sky.split(',')[0])"
           :icon-name="weatherFirstData.sky.split(',')[1]"
@@ -117,9 +121,14 @@ const option = {
       </div>
     </div>
     <div
+      v-if="uvData"
       key="4"
       class="flex items-center h-[40px] w-fit"
     >
+      <AIconText
+        :use-icon="false"
+        :text="uvData.location"
+      />
       <div
         v-if="weatherSecondData"
         class="flex gap-4"

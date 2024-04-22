@@ -13,9 +13,9 @@ definePageMeta({
 })
 
 const transportationPage = ref(1)
-const transportationPageCount = ref(10)
+const transportationPageCount = 10
 const keepingPage = ref(1)
-const keepingPageCount = ref(10)
+const keepingPageCount = 10
 
 const transportationColumns = computed(() => [
   {
@@ -25,8 +25,7 @@ const transportationColumns = computed(() => [
   },
   {
     key: 'car_number',
-    label: '차량 번호',
-    sortable: true
+    label: '차량 번호'
   },
   {
     key: 'car_model',
@@ -60,13 +59,11 @@ const transportationColumns = computed(() => [
   },
   {
     key: 'name',
-    label: '손님',
-    sortable: true
+    label: '손님'
   },
   {
     key: 'mobile',
-    label: '손님핸드폰',
-    sortable: true
+    label: '손님핸드폰'
   },
   {
     key: 'actions',
@@ -82,8 +79,7 @@ const keepingColumns = computed(() => [
   },
   {
     key: 'car_number',
-    label: '차량 번호',
-    sortable: true
+    label: '차량 번호'
   },
   {
     key: 'car_model',
@@ -107,13 +103,11 @@ const keepingColumns = computed(() => [
   },
   {
     key: 'name',
-    label: '손님',
-    sortable: true
+    label: '손님'
   },
   {
     key: 'mobile',
-    label: '손님핸드폰',
-    sortable: true
+    label: '손님핸드폰'
   },
   {
     key: 'actions',
@@ -121,7 +115,15 @@ const keepingColumns = computed(() => [
   }
 ])
 
-const items = (row: unknown) => [
+const transportationRows = computed(() => {
+  return transportationAllData.value.slice((transportationPage.value - 1) * transportationPageCount, transportationPage.value * transportationPageCount)
+})
+
+const keepingRows = computed(() => {
+  return keepingAllData.value.slice((keepingPage.value - 1) * keepingPageCount, keepingPage.value * keepingPageCount)
+})
+
+const transportationController = (row: unknown) => [
   [{
     label: '수정',
     icon: 'i-heroicons-pencil-square-20-solid',
@@ -132,6 +134,33 @@ const items = (row: unknown) => [
     click: () => console.log('클릭')
   }]
 ]
+
+const keepingController = (row: unknown) => [
+  [{
+    label: '수정',
+    icon: 'i-heroicons-pencil-square-20-solid',
+    click: () => console.log('클릭', row)
+  }, {
+    label: '삭제',
+    icon: 'i-heroicons-trash',
+    click: () => console.log('클릭')
+  }]
+]
+
+const tableUiOption = {
+  wrapper: 'ring-2 dark:ring-zinc-200 rounded-lg m-4',
+  divide: 'dark:divide-zinc-200',
+  thead: 'break-keep',
+  tbody: 'dark:divide-zinc-700'
+}
+const sortButtonStyleOption = {
+  icon: 'i-heroicons-sparkles-20-solid',
+  color: 'primary',
+  variant: 'outline',
+  size: 'xs',
+  square: false,
+  ui: { rounded: 'rounded-full' }
+}
 
 console.log(keepingAllData.value, transportationAllData.value)
 
@@ -144,12 +173,17 @@ loadTransportation(true)
   <section>
     <BGTable
       :columns="transportationColumns"
-      :rows="transportationAllData"
-      :ui="{ default: { sortButton: { class: 'break-keep' } }}"
+      :rows="transportationRows"
+      :sort-button="sortButtonStyleOption"
+      :ui="tableUiOption"
     >
       <template #actions-data="{ row }">
-        <BGDropdown :items="items(row)">
+        <BGDropdown
+          :items="transportationController(row)"
+          :ui="{ container: 'w-fit', padding: 'px-3', background: 'dark:bg-zinc-800' }"
+        >
           <AButton
+            custom-class="p-0"
             button-variant="ghost"
             use-leading
             icon-name="i-heroicons-ellipsis-horizontal-20-solid"
@@ -157,10 +191,9 @@ loadTransportation(true)
         </BGDropdown>
       </template>
     </BGTable>
-    <div class="flex justify-end px-3 py-3.5 border-t border-zinc-200 dark:border-zinc-700">
+    <div class="flex justify-end mx-3 px-3 py-3.5 border-t dark:border-red-400">
       <BGPagination
         v-model="transportationPage"
-        color="teal"
         size="md"
         :max="5"
         show-first
@@ -169,17 +202,22 @@ loadTransportation(true)
         :inactive-button="{ color: 'gray' }"
         :page-count="transportationPageCount"
         :total="transportationAllData.length ?? 0"
-        :ui="{ default: { activeButton: { color: 'teal' } } }"
+        :ui="{ default: { activeButton: { color: 'red' } } }"
       />
     </div>
     <BGTable
       :columns="keepingColumns"
-      :rows="keepingAllData"
-      :ui="{ default: { sortButton: { class: 'break-keep' } }}"
+      :rows="keepingRows"
+      :sort-button="sortButtonStyleOption"
+      :ui="tableUiOption"
     >
       <template #actions-data="{ row }">
-        <BGDropdown :items="items(row)">
+        <BGDropdown
+          :items="keepingController(row)"
+          :ui="{ container: 'w-fit', padding: 'px-3', background: 'dark:bg-zinc-800' }"
+        >
           <AButton
+            custom-class="p-0"
             button-variant="ghost"
             use-leading
             icon-name="i-heroicons-ellipsis-horizontal-20-solid"
@@ -187,10 +225,9 @@ loadTransportation(true)
         </BGDropdown>
       </template>
     </BGTable>
-    <div class="flex justify-end px-3 py-3.5 border-t border-zinc-200 dark:border-zinc-700">
+    <div class="flex justify-end mx-3 px-3 py-3.5 border-t dark:border-red-400">
       <BGPagination
         v-model="keepingPage"
-        color="teal"
         size="md"
         :max="5"
         show-first
@@ -199,7 +236,7 @@ loadTransportation(true)
         :inactive-button="{ color: 'gray' }"
         :page-count="keepingPageCount"
         :total="keepingAllData.length ?? 0"
-        :ui="{ default: { activeButton: { color: 'teal' } } }"
+        :ui="{ default: { activeButton: { color: 'red' } } }"
       />
     </div>
   </section>
