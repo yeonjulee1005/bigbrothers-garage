@@ -1,5 +1,12 @@
 <script setup lang="ts">
 
+const { go } = useRouter()
+const toast = useToast()
+
+const { updateData } = useFetchComposable()
+
+const { keepingData } = storeToRefs(useKeepingStore())
+const { transportationData } = storeToRefs(useTransportationStore())
 const { garagePosition } = storeToRefs(useGaragePositionStore())
 
 const dialogTrigger = defineModel('dialogTrigger', {
@@ -15,15 +22,67 @@ const emits = defineEmits([
   'close:dialog',
 ])
 
-const currentPosition = ref('')
 const selectPosition = ref('')
+const currentPosition = ref('')
+const legacyPositionDataId = ref('')
+
+watchEffect(() => {
+  if (props.selectData) {
+    selectPosition.value = props.selectData.garagePosition.id
+  }
+})
 
 const submitChange = () => {
+  const isKeepingData = garagePositionCode(selectPosition.value).includes('GP')
+
   currentPosition.value = props.selectData.garagePosition.id
 
-  // 변경할 위치의 id를 조회해서, 만일 변경할 위치에 차량이 존재할 경우, 과거 위치로 변경해야함
-  console.log('변경할 위치', selectPosition.value)
-  console.log('과거 위치', currentPosition.value)
+  switch (isKeepingData) {
+    case true:
+      legacyPositionDataId.value = keepingDataFilter()
+      break
+    case false:
+      legacyPositionDataId.value = transportationDataFilter()
+      break
+  }
+
+  if (legacyPositionDataId.value) {
+    updateData({ garage_position: currentPosition.value }, legacyPositionDataId.value, selectDatabaseTable())
+    updateData({ garage_position: selectPosition.value }, props.selectData.id, selectDatabaseTable())
+  } else {
+    updateData({ garage_position: selectPosition.value }, props.selectData.id, selectDatabaseTable())
+  }
+
+  closeDialog(false)
+  toast.add({ title: '위치변경을 성공하였습니다.', color: 'emerald', timeout: 1500 })
+  go(0)
+}
+
+const garagePositionCode = (garagePositionId: string) => {
+  const findPosition = garagePosition.value.find((position: SerializeObject) => position.id === garagePositionId)
+  return findPosition?.code
+}
+
+const keepingDataFilter = () => {
+  const filterData = keepingData.value.filter((data: SerializeObject) => data.garagePosition.id === selectPosition.value)
+
+  return filterData.length
+    ? filterData[0].id
+    : ''
+}
+
+const transportationDataFilter = () => {
+  const filterData = transportationData.value.filter((data: SerializeObject) => data.garagePosition.id === selectPosition.value)
+
+  return filterData.length
+    ? filterData[0].id
+    : ''
+}
+
+const selectDatabaseTable = () => {
+  return props.selectData.transporter === undefined
+    ? 'keeping'
+    : 'transportation'
 }
 
 const closeDialog = (trigger:boolean) => {

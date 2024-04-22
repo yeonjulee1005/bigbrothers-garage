@@ -10,20 +10,32 @@ export const useFetchComposable = () => {
   const { garagePosition } = storeToRefs(useGaragePositionStore())
   const { transporter, transportStatus } = storeToRefs(useTransportOptions())
 
-  const insertData = async (insertData: SerializeObject, table: string) => {
+  const insertData = async (data: SerializeObject, table: string) => {
     const { error } = await client
       .from(table)
-      .insert(insertData)
+      .insert(data)
 
     if (error) {
       return error
     }
   }
 
-  const upsertData = async (upsertData: SerializeObject, table: string) => {
+  const updateData = async (dataDD: SerializeObject, updateId: string, table: string) => {
+    const {  error } = await client
+      .from(table)
+      .update(dataDD as never)
+      .eq('id', updateId)
+      .select()
+
+    if (error) {
+      return error
+    }
+  }
+
+  const upsertData = async (data: SerializeObject, table: string) => {
     const { error } = await client
       .from(table)
-      .upsert(upsertData)
+      .upsert(data)
 
     if (error) {
       return error
@@ -98,6 +110,7 @@ export const useFetchComposable = () => {
 
   return {
     insertData,
+    updateData,
     upsertData,
     loadKeeping,
     loadTransportation,

@@ -34,9 +34,9 @@ const uploadFile = (event: FileList) => {
   const [_file] = event as FileList
 
   if (!limitType.includes(_file.type)) {
-    toast.add({ title: '이미지 업로드 포멧을 확인하세요!', color: 'violet', timeout: 3000 })
+    toast.add({ title: '이미지 업로드 포멧을 확인하세요!', color: 'violet', timeout: 1500 })
   } else if (_file.size / 1024 / 1024 > 5) {
-    toast.add({ title: '이미지 업로드 사이즈가 너무 커요!', color: 'violet', timeout: 3000 })
+    toast.add({ title: '이미지 업로드 사이즈가 너무 커요!', color: 'violet', timeout: 1500 })
   } else {
     uploadImage(_file)
   }
@@ -49,9 +49,9 @@ const uploadImage = async (file:File) => {
   const uploadError = await uploadStorage(props.bucketName, filePath, file)
 
   if (uploadError) {
-    toast.add({ title: String(uploadError), color: 'orange', timeout: 3000 })
+    toast.add({ title: String(uploadError), color: 'orange', timeout: 1500 })
   }
-  toast.add({ title: '이미지 업로드 성공', color: 'emerald', timeout: 3000 })
+  toast.add({ title: '이미지 업로드 성공', color: 'emerald', timeout: 1500 })
   await downloadImage(filePath)
 }
 
@@ -63,11 +63,11 @@ const downloadImage = async (imageName:string) => {
 
 const submitImage = () => {
   if (!exportUrl.value) {
-    toast.add({ title: '이미지를 추가하세요', color: 'orange', timeout: 3000 })
+    toast.add({ title: '이미지를 추가하세요', color: 'orange', timeout: 1500 })
     return
   }
   emits('submit:image', exportUrl.value)
-  toast.add({ title: '이미지 등록 완료', color: 'emerald', timeout: 3000 })
+  toast.add({ title: '이미지 등록 완료', color: 'emerald', timeout: 1500 })
   closeDialog(false)
 }
 

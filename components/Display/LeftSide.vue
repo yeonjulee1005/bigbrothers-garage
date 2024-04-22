@@ -2,16 +2,10 @@
 
 const { width } = useWindowSize()
 
-const props = withDefaults(
-  defineProps<{
-    keepingData: SerializeObject[],
-    transportationData: SerializeObject[],
-    controllable?: boolean
-  }>(),
-  {
-    controllable: false
-  }
-)
+const props = defineProps<{
+  keepingData: SerializeObject[],
+  transportationData: SerializeObject[]
+}>()
 
 const emits = defineEmits([
   'click:position'
@@ -22,10 +16,6 @@ const computedIconSize = computed(() => {
 })
 
 const clickPositionButton = (buttonText: string, buttonData: SerializeObject) => {
-  if (!props.controllable) {
-    return
-  }
-
   emits('click:position', buttonText, buttonData)
 }
 
@@ -38,13 +28,13 @@ const filtteredData = (code: string) => {
 const selectKeepingData = (code: string) => {
   if (!props.keepingData) { return undefined }
 
-  return props.keepingData.filter((item: SerializeObject) => item.garagePosition.code === code)[0] ?? undefined
+  return props.keepingData.filter((item: SerializeObject) => item.garagePosition.code === code)[0] ?? props.transportationData.filter((item: SerializeObject) => item.garagePosition.code === code)[0] ?? undefined
 }
 
 const selectTransportaionData = (code: string) => {
   if (!props.transportationData) { return undefined }
 
-  return props.transportationData.filter((item: SerializeObject) => item.garagePosition.code === code)[0] ?? undefined
+  return props.transportationData.filter((item: SerializeObject) => item.garagePosition.code === code)[0] ?? props.keepingData.filter((item: SerializeObject) => item.garagePosition.code === code)[0] ?? undefined
 }
 
 </script>
