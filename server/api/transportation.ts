@@ -8,8 +8,8 @@ export default defineEventHandler(async (event) => {
   if (allData) {
     const { data, error } = await client
       .from('transportation')
-      .select('id, transporter(id, car_number, name, mobile), transportStatus(id, code, code_name), garagePosition(id, order, code, code_name), car_number, car_model, name, mobile, start_date, end_date, memo, car_photo_name, luggage_photo_name, extra_photo_name, deleted')
-      .order('deleted', { ascending: false })
+      .select('id, transporter(id, car_number, name, mobile), transportStatus(id, code, code_name), garagePosition(id, order, code, code_name), car_number, car_model, name, mobile, start_date, end_date, memo, car_photo_name, luggage_photo_name, extra_photo_name, class, deleted')
+      .order('deleted', { ascending: true })
 
     if (error) {
       throw createError({ statusMessage: error.message })
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   } else {
     const { data, error } = await client
       .from('transportation')
-      .select('id, transporter(id, car_number, name, mobile), transportStatus(id, code, code_name), garagePosition(id, order, code, code_name), car_number, car_model, name, mobile, start_date, end_date, memo, car_photo_name, luggage_photo_name, extra_photo_name, deleted')
+      .select('id, transporter(id, car_number, name, mobile), transportStatus(id, code, code_name), garagePosition(id, order, code, code_name), car_number, car_model, name, mobile, start_date, end_date, memo, car_photo_name, luggage_photo_name, extra_photo_name, class, deleted')
       .eq('deleted', false)
 
     if (error) {

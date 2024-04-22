@@ -62,6 +62,15 @@ const formData = reactive({
   luggagePhotoName: ''
 })
 
+const cardUiOption = {
+  body: { base: 'w-full' },
+  ring: 'ring-2 ring-zinc-800 dark:ring-zinc-200',
+  shadow: 'shadow-md shadow-zinc-200/40',
+  divide: 'divide-zinc-800 dark:divide-zinc-200',
+  rounded: 'rounded-lg',
+  background: 'bg-zinc-50/60 dark:bg-zinc-800/60'
+}
+
 const submitImage = (bucketName: string, imageUrl: string) => {
   switch (bucketName) {
     case 'car_photo' :
@@ -140,7 +149,7 @@ const createTransportationData = async () => {
   <div class="flex flex-col justify-center items-center">
     <BGCard
       class="flex flex-col md:w-[600px] w-[90%] m-4"
-      :ui="{ body: { base: 'w-full' }, ring: 'ring-2 ring-zinc-800 dark:ring-zinc-200', shadow: 'shadow-md shadow-zinc-200/40', divide: 'divide-zinc-800 dark:divide-zinc-200', rounded: 'rounded-lg', background: 'bg-zinc-50/60 dark:bg-zinc-800/60' }"
+      :ui="cardUiOption"
     >
       <BGForm
         :schema="schema"
