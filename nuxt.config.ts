@@ -29,11 +29,13 @@ export default defineNuxtConfig({
     'nuxt-time',
     '@vueuse/nuxt',
     '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt'
+    '@pinia-plugin-persistedstate/nuxt',
+    'dayjs-nuxt'
   ],
   runtimeConfig: {
     public: {
-      serviceVersion: JSON.stringify(packageJson.version)
+      serviceVersion: JSON.stringify(packageJson.version),
+      dataPortalApiKey: process.env.DATA_PORTAL_API_KEY
     }
   },
   css: [
