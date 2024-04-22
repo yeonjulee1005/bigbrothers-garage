@@ -1,9 +1,11 @@
 <script setup lang="ts">
 
+useHead({
+  title: '게러지 현황보기'
+})
+
 </script>
 
 <template>
-  <div class="w-screen min-h-screen flex justify-center items-center p-8 gap-8">
-    index
-  </div>
+  <DisplayGarage />
 </template>

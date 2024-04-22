@@ -20,7 +20,7 @@ const props = withDefaults(
     dialogTrigger: false,
     fullScreen: false,
     preventClose: false,
-    dialogTitleClass: '',
+    dialogTitleClass: 'text-lg font-bold',
     title: '',
     doubleFirstText: '',
     doubleSecondText: '',
@@ -69,7 +69,7 @@ watch(() => modalTrigger.value, (value) => {
       <template #header>
         <div
           v-if="title"
-          class="flex items-center justify-between"
+          class="flex items-center justify-between pl-4"
         >
           <span :class="dialogTitleClass">
             {{ title }}

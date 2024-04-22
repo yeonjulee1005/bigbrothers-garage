@@ -2,7 +2,7 @@
 
 const links = [
   {
-    label: '게러지 현황',
+    label: '빅브라더스 보관현황',
     icon: 'i-maki-parking-garage',
     to: '/'
   }
@@ -11,10 +11,11 @@ const links = [
 </script>
 
 <template>
-  <div class="flex flex-row w-screen justify-between p-4">
+  <div class="flex flex-wrap flex-row w-screen justify-between gap-2 p-4">
     <BGHorizontalNavigation
       :links="links"
-      :ui="{ active: 'after:bg-rose-500 dark:after:bg-rose-400' }"
+      :ui="{ wrapper: 'w-fit', active: 'after:bg-rose-500 dark:after:bg-rose-400' }"
     />
+    <AForecast />
   </div>
 </template>

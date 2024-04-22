@@ -23,8 +23,14 @@ const buttonBackgroundColor = () => {
       return 'bg-sky-700'
     case 'TPS005' :
       return 'bg-red-900'
+    case 'TPS006' :
+      return 'bg-yellow-800'
+    case 'TPS007' :
+      return 'bg-violet-900'
+    case 'TPS008' :
+      return 'bg-gray-400'
     default:
-      return ''
+      return 'bg-sky-400'
   }
 }
 

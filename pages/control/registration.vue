@@ -104,7 +104,7 @@ const createKeepingData = async () => {
 
   if (!error) {
     navigateTo('/control')
-    toast.add({ title: '보관차량 등록에 성공하였습니다.', color: 'emerald', timeout: 3000 })
+    toast.add({ title: '보관차량 등록에 성공하였습니다.', color: 'emerald', timeout: 1500 })
   }
 }
 
@@ -130,7 +130,7 @@ const createTransportationData = async () => {
 
   if (!error) {
     navigateTo('/control')
-    toast.add({ title: '운송차량 등록에 성공하였습니다.', color: 'emerald', timeout: 3000 })
+    toast.add({ title: '운송차량 등록에 성공하였습니다.', color: 'emerald', timeout: 1500 })
   }
 }
 
