@@ -11,7 +11,6 @@ withDefaults(
   {
     controllable: false
   }
-
 )
 
 const selectPosition = ref('')
@@ -24,8 +23,8 @@ const clickGaragePosition = (buttonText: string, buttonData: SerializeObject) =>
   controllerBoxTrigger.value = true
 }
 
-loadKeeping()
-loadTransportation()
+loadKeeping(false)
+loadTransportation(false)
 
 </script>
 

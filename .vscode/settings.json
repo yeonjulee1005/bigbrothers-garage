@@ -1,19 +1,24 @@
 {
   "eslint.experimental.useFlatConfig": true,
   "cSpell.words": [
+    "Card",
     "controllable",
     "Defaults",
     "emits",
     "filttered",
     "Garage",
     "Keeping",
+    "Living",
     "luggage",
     "Nuxt",
+    "Pagination",
     "Photo",
     "Pinia",
     "Supabase",
     "toast",
     "Transportaion",
-    "Transporter"
+    "Transporter",
+    "Weather",
+    "zinc"
   ]
 }
