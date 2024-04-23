@@ -42,11 +42,6 @@ const selectTransportaionData = (code: string) => {
 <template>
   <div class="grid grid-rows-13 grid-flow-col grid-cols-2 gap-2">
     <DisplayButton
-      :button-data="filtteredData('TP045')"
-      button-grid="row-span-1 col-start-1 flex justify-center items-center p-1"
-      @click:display-button="() => clickPositionButton('TP045', filtteredData('TP045'))"
-    />
-    <DisplayButton
       :button-data="filtteredData('TP046')"
       button-grid="row-span-1 col-start-1 flex justify-center items-center p-1"
       @click:display-button="() => clickPositionButton('TP046', filtteredData('TP046'))"
@@ -86,12 +81,12 @@ const selectTransportaionData = (code: string) => {
       button-grid="row-span-1 col-start-1 flex justify-center items-center p-1"
       @click:display-button="() => clickPositionButton('TP053', filtteredData('TP053'))"
     />
-    <div class="row-span-1 col-start-1" />
     <DisplayButton
       :button-data="filtteredData('TP054')"
       button-grid="row-span-1 col-start-1 flex justify-center items-center p-1"
       @click:display-button="() => clickPositionButton('TP054', filtteredData('TP054'))"
     />
+    <div class="row-span-1 col-start-1" />
     <DisplayButton
       :button-data="filtteredData('TP055')"
       button-grid="row-span-1 col-start-1 flex justify-center items-center p-1"
@@ -101,6 +96,11 @@ const selectTransportaionData = (code: string) => {
       :button-data="filtteredData('TP056')"
       button-grid="row-span-1 col-start-1 flex justify-center items-center p-1"
       @click:display-button="() => clickPositionButton('TP056', filtteredData('TP056'))"
+    />
+    <DisplayButton
+      :button-data="filtteredData('TP057')"
+      button-grid="row-span-1 col-start-1 flex justify-center items-center p-1"
+      @click:display-button="() => clickPositionButton('TP057', filtteredData('TP057'))"
     />
     <DisplayIcon
       grid-class="row-span-12 row-start-1 col-start-2"
