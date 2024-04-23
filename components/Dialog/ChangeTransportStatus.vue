@@ -73,7 +73,6 @@ const closeDialog = (trigger:boolean) => {
       option-attribute="code_name"
       placeholder="운송상태"
     />
-
   </ADialog>
 </template>
 

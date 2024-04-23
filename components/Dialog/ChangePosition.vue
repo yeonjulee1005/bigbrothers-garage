@@ -113,7 +113,6 @@ const closeDialog = (trigger:boolean) => {
       option-attribute="code_name"
       placeholder="주차위치"
     />
-
   </ADialog>
 </template>
 
