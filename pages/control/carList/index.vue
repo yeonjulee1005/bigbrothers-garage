@@ -1,6 +1,8 @@
 <script setup lang="ts">
 
-const { loadKeeping, loadTransportation } = useFetchComposable()
+const toast = useToast()
+
+const { updateData, loadKeeping, loadTransportation } = useFetchComposable()
 const { keepingAllData } = storeToRefs(useKeepingStore())
 const { transportationAllData } = storeToRefs(useTransportationStore())
 
@@ -12,10 +14,12 @@ definePageMeta({
   layout: 'control'
 })
 
+const selectButtonData = ref<SerializeObject | undefined>(undefined)
 const transportationPage = ref(1)
 const transportationPageCount = 10
 const keepingPage = ref(1)
 const keepingPageCount = 10
+const editDataDialogTrigger = ref(false)
 
 const transportationColumns = computed(() => [
   {
@@ -123,27 +127,15 @@ const keepingRows = computed(() => {
   return keepingAllData.value.slice((keepingPage.value - 1) * keepingPageCount, keepingPage.value * keepingPageCount)
 })
 
-const transportationController = (row: unknown) => [
+const controller = (row: unknown) => [
   [{
     label: '수정',
     icon: 'i-heroicons-pencil-square-20-solid',
-    click: () => console.log('클릭', row)
+    click: () => openEditDialog(row)
   }, {
     label: '삭제',
     icon: 'i-heroicons-trash',
-    click: () => console.log('클릭')
-  }]
-]
-
-const keepingController = (row: unknown) => [
-  [{
-    label: '수정',
-    icon: 'i-heroicons-pencil-square-20-solid',
-    click: () => console.log('클릭', row)
-  }, {
-    label: '삭제',
-    icon: 'i-heroicons-trash',
-    click: () => console.log('클릭')
+    click: () => deleteData(row)
   }]
 ]
 
@@ -153,6 +145,7 @@ const tableUiOption = {
   thead: 'break-keep',
   tbody: 'dark:divide-zinc-700'
 }
+
 const sortButtonStyleOption = {
   icon: 'i-heroicons-sparkles-20-solid',
   color: 'primary',
@@ -160,6 +153,23 @@ const sortButtonStyleOption = {
   size: 'xs',
   square: false,
   ui: { rounded: 'rounded-full' }
+}
+
+const openEditDialog = (row: unknown) => {
+  selectButtonData.value = row
+  editDataDialogTrigger.value = true
+}
+
+const deleteData = (row: SerializeObject) => {
+  // 스토리지에 이미지 삭제하고, 테이블에 이미지이름 삭제하는 로직 추가해야함
+  updateData({ garage_position: '6e478ca3-de02-47c9-a320-423ae8d03a67', transport_status: '0661badf-9160-4dd3-a286-9cb80d2f767b', class: 'line-through dark:bg-red-800 animate-pulse', deleted: true }, row.id, selectDatabaseTable(row))
+  toast.add({ title: '삭제 했습니다.', color: 'emerald', timeout: 1500 })
+}
+
+const selectDatabaseTable = (row: SerializeObject) => {
+  return row.transporter === undefined
+    ? 'keeping'
+    : 'transportation'
 }
 
 console.log(keepingAllData.value, transportationAllData.value)
@@ -179,7 +189,7 @@ loadTransportation(true)
     >
       <template #actions-data="{ row }">
         <BGDropdown
-          :items="transportationController(row)"
+          :items="controller(row)"
           :ui="{ container: 'w-fit', padding: 'px-3', background: 'dark:bg-zinc-800' }"
         >
           <AButton
@@ -213,7 +223,7 @@ loadTransportation(true)
     >
       <template #actions-data="{ row }">
         <BGDropdown
-          :items="keepingController(row)"
+          :items="controller(row)"
           :ui="{ container: 'w-fit', padding: 'px-3', background: 'dark:bg-zinc-800' }"
         >
           <AButton
@@ -239,5 +249,9 @@ loadTransportation(true)
         :ui="{ default: { activeButton: { color: 'red' } } }"
       />
     </div>
+    <DialogEditData
+      v-model:dialog-trigger="editDataDialogTrigger"
+      :select-data="selectButtonData"
+    />
   </section>
 </template>

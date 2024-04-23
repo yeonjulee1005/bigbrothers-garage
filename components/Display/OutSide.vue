@@ -110,7 +110,7 @@ const selectTransportaionData = (code: string) => {
     <AIconText
       custom-class="row-span-1 row-start-7 col-start-2 flex items-center justify-center"
       :use-icon="false"
-      text="게러지"
+      text="게러지 건물"
     />
   </div>
 </template>

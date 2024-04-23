@@ -22,6 +22,7 @@ withDefaults(
 const changePositionDialogTrigger = ref(false)
 const changeTransportStatusDialogTrigger = ref(false)
 const changeTransporterDialogTrigger = ref(false)
+const editDataDialogTrigger = ref(false)
 
 const selectPositionName = (selectPosition: string) => {
   const selectPositionData = garagePosition.value.find((position: SerializeObject) => position.code === selectPosition)
@@ -45,6 +46,11 @@ const openChangeTransportStatusDialog = () => {
 const openChangeTransporterDialog = () => {
   dialogTrigger.value = false
   changeTransporterDialogTrigger.value = true
+}
+
+const openEditDataDialog = () => {
+  dialogTrigger.value = false
+  editDataDialogTrigger.value = true
 }
 
 </script>
@@ -84,7 +90,7 @@ const openChangeTransporterDialog = () => {
           v-if="controllable"
           custom-class="w-full"
           button-text="정보 수정"
-          @click:button="() => console.log(selectButtonData)"
+          @click:button="openEditDataDialog"
         />
         <NuxtImg
           :src="selectButtonData.car_photo_name"
@@ -161,6 +167,10 @@ const openChangeTransporterDialog = () => {
       v-model:dialog-trigger="changeTransporterDialogTrigger"
       :select-data="selectButtonData"
       @close:dialog="(trigger:boolean) => changeTransporterDialogTrigger = trigger"
+    />
+    <DialogEditData
+      v-model:dialog-trigger="editDataDialogTrigger"
+      :select-data="selectButtonData"
     />
   </div>
 </template>
