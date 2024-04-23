@@ -3,20 +3,12 @@ import { SpeedInsights } from '@vercel/speed-insights/vue'
 
 const { meta, fullPath } = useRoute()
 const { filteredLocations } = useKorLocation()
-const { genDateFormat } = useUi()
 
 const locWeatherStore = useLocWeatherStore()
-const { geoX, geoY, forecastHour, currentLocationCode } = storeToRefs(locWeatherStore)
+const { geoX, geoY, currentLocationCode } = storeToRefs(locWeatherStore)
 const { fetchLivingData, fetchWeatherData } = locWeatherStore
 
 const { loadGaragePosition, loadTransporter, loadTransportStatus } = useFetchComposable()
-
-watch(() => genDateFormat('HH'), () => {
-  if (genDateFormat('HH').concat('00') !== forecastHour.value) {
-    fetchLivingData()
-    fetchWeatherData()
-  }
-})
 
 const initWeatherData = () => {
   geoX.value = 54
