@@ -21,7 +21,6 @@ const initWeatherData = () => {
 }
 
 initWeatherData()
-
 loadGaragePosition()
 loadTransporter()
 loadTransportStatus()
