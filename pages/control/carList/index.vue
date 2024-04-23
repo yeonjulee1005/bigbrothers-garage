@@ -123,7 +123,19 @@ const keepingRows = computed(() => {
   return keepingAllData.value.slice((keepingPage.value - 1) * keepingPageCount, keepingPage.value * keepingPageCount)
 })
 
-const items = (row: unknown) => [
+const transportationController = (row: unknown) => [
+  [{
+    label: '수정',
+    icon: 'i-heroicons-pencil-square-20-solid',
+    click: () => console.log('클릭', row)
+  }, {
+    label: '삭제',
+    icon: 'i-heroicons-trash',
+    click: () => console.log('클릭')
+  }]
+]
+
+const keepingController = (row: unknown) => [
   [{
     label: '수정',
     icon: 'i-heroicons-pencil-square-20-solid',
@@ -167,7 +179,7 @@ loadTransportation(true)
     >
       <template #actions-data="{ row }">
         <BGDropdown
-          :items="items(row)"
+          :items="transportationController(row)"
           :ui="{ container: 'w-fit', padding: 'px-3', background: 'dark:bg-zinc-800' }"
         >
           <AButton
@@ -201,7 +213,7 @@ loadTransportation(true)
     >
       <template #actions-data="{ row }">
         <BGDropdown
-          :items="items(row)"
+          :items="keepingController(row)"
           :ui="{ container: 'w-fit', padding: 'px-3', background: 'dark:bg-zinc-800' }"
         >
           <AButton
