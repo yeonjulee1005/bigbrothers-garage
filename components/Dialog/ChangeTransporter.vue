@@ -23,7 +23,7 @@ const selectTransporter = ref('')
 
 watchEffect(() => {
   if (props.selectData) {
-    selectTransporter.value = props.selectData.transporter.id
+    selectTransporter.value = props.selectData?.transporter?.id
   }
 })
 
@@ -70,7 +70,6 @@ const closeDialog = (trigger:boolean) => {
       option-attribute="name"
       placeholder="운송담당자"
     />
-
   </ADialog>
 </template>
 
