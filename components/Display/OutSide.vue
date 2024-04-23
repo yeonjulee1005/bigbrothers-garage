@@ -103,9 +103,14 @@ const selectTransportaionData = (code: string) => {
       @click:display-button="() => clickPositionButton('TP057', filtteredData('TP057'))"
     />
     <DisplayIcon
-      grid-class="row-span-12 row-start-1 col-start-2"
+      grid-class="row-span-6 row-start-3 col-start-2"
       display-icon-name="maki:parking-garage"
       :display-icon-size="computedIconSize"
+    />
+    <AIconText
+      custom-class="row-span-1 row-start-7 col-start-2 flex items-center justify-center"
+      :use-icon="false"
+      text="게러지"
     />
   </div>
 </template>

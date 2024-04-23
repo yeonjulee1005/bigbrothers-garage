@@ -1,9 +1,8 @@
 <script setup lang="ts">
 
-const { go } = useRouter()
 const toast = useToast()
 
-const { updateData } = useFetchComposable()
+const { updateData, loadKeeping, loadTransportation } = useFetchComposable()
 
 const { transporter } = storeToRefs(useTransportOptions())
 
@@ -17,7 +16,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits([
-  'close:dialog',
+  'close:dialog'
 ])
 
 const selectTransporter = ref('')
@@ -30,8 +29,15 @@ watchEffect(() => {
 
 const submitChange = () => {
   updateData({ transporter: selectTransporter.value }, props.selectData.id, selectDatabaseTable())
+
+  loadData()
+  closeDialog(false)
   toast.add({ title: '운송담당자 변경을 성공하였습니다.', color: 'emerald', timeout: 1500 })
-  go(0)
+}
+
+const loadData = () => {
+  loadKeeping(false)
+  loadTransportation(false)
 }
 
 const selectDatabaseTable = () => {
