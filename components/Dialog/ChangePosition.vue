@@ -1,9 +1,8 @@
 <script setup lang="ts">
 
-const { go } = useRouter()
 const toast = useToast()
 
-const { updateData } = useFetchComposable()
+const { updateData, loadKeeping, loadTransportation } = useFetchComposable()
 
 const { keepingData } = storeToRefs(useKeepingStore())
 const { transportationData } = storeToRefs(useTransportationStore())
@@ -19,7 +18,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits([
-  'close:dialog',
+  'close:dialog'
 ])
 
 const selectPosition = ref('')
@@ -53,9 +52,14 @@ const submitChange = () => {
     updateData({ garage_position: selectPosition.value }, props.selectData.id, selectDatabaseTable())
   }
 
+  loadData()
   closeDialog(false)
   toast.add({ title: '위치변경을 성공하였습니다.', color: 'emerald', timeout: 1500 })
-  go(0)
+}
+
+const loadData = () => {
+  loadKeeping(false)
+  loadTransportation(false)
 }
 
 const garagePositionCode = (garagePositionId: string) => {

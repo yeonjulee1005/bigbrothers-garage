@@ -1,9 +1,8 @@
 <script setup lang="ts">
 
-const { go } = useRouter()
 const toast = useToast()
 
-const { updateData } = useFetchComposable()
+const { updateData, loadKeeping, loadTransportation } = useFetchComposable()
 
 const { transportStatus } = storeToRefs(useTransportOptions())
 
@@ -17,7 +16,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits([
-  'close:dialog',
+  'close:dialog'
 ])
 
 const selectStatus = ref('')
@@ -33,8 +32,15 @@ const submitChange = () => {
   if (selectStatus.value === '0661badf-9160-4dd3-a286-9cb80d2f767b') {
     updateData({ garage_position: '6e478ca3-de02-47c9-a320-423ae8d03a67', class: 'line-through dark:bg-red-800 animate-pulse', deleted: true }, props.selectData.id, selectDatabaseTable())
   }
+
+  loadData()
+  closeDialog(false)
   toast.add({ title: '상태변경을 성공하였습니다.', color: 'emerald', timeout: 1500 })
-  go(0)
+}
+
+const loadData = () => {
+  loadKeeping(false)
+  loadTransportation(false)
 }
 
 const selectDatabaseTable = () => {
