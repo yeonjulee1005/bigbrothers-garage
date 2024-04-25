@@ -118,6 +118,16 @@ export const useFetchComposable = () => {
     return error
   }
 
+  const deleteStorage = async (storage: string, imageName: string) => {
+    const { error } = await client
+      .storage
+      .from(storage)
+      .remove([imageName])
+
+    console.log(error)
+    return error
+  }
+
   return {
     insertData,
     updateData,
@@ -128,6 +138,7 @@ export const useFetchComposable = () => {
     loadTransporter,
     loadTransportStatus,
     loadStorage,
-    uploadStorage
+    uploadStorage,
+    deleteStorage
   }
 }

@@ -2,7 +2,7 @@
 
 const toast = useToast()
 
-const { updateData, loadKeeping, loadTransportation } = useFetchComposable()
+const { updateData, deleteStorage, loadKeeping, loadTransportation } = useFetchComposable()
 const { keepingAllData } = storeToRefs(useKeepingStore())
 const { transportationAllData } = storeToRefs(useTransportationStore())
 
@@ -161,8 +161,40 @@ const openEditDialog = (row: unknown) => {
 }
 
 const deleteData = (row: SerializeObject) => {
-  // 스토리지에 이미지 삭제하고, 테이블에 이미지이름 삭제하는 로직 추가해야함
-  updateData({ garage_position: '6e478ca3-de02-47c9-a320-423ae8d03a67', transport_status: '0661badf-9160-4dd3-a286-9cb80d2f767b', class: 'line-through dark:bg-red-800 animate-pulse', deleted: true }, row.id, selectDatabaseTable(row))
+  if (row.transporter) {
+    deleteStorage('car_photo', row.car_photo_name.split('car_photo/')[1])
+    deleteStorage('extra_photo_name', row.extra_photo_name.split('extra_photo/')[1])
+    deleteStorage('luggage_photo', row.luggage_photo_name.split('luggage_photo/')[1])
+    updateData(
+      {
+        car_photo_name: '',
+        extra_photo_name: '',
+        luggage_photo_name: '',
+        garage_position: '6e478ca3-de02-47c9-a320-423ae8d03a67',
+        transport_status: '0661badf-9160-4dd3-a286-9cb80d2f767b',
+        class: 'line-through dark:bg-red-800 animate-pulse',
+        deleted: true
+      },
+      row.id,
+      selectDatabaseTable(row)
+    )
+  } else {
+    deleteStorage('car_photo', row.car_photo_name.split('car_photo/')[1])
+    deleteStorage('extra_photo_name', row.extra_photo_name.split('extra_photo/')[1])
+    updateData(
+      {
+        car_photo_name: '',
+        extra_photo_name: '',
+        garage_position: '6e478ca3-de02-47c9-a320-423ae8d03a67',
+        transport_status: '0661badf-9160-4dd3-a286-9cb80d2f767b',
+        class: 'line-through dark:bg-red-800 animate-pulse',
+        deleted: true
+      },
+      row.id,
+      selectDatabaseTable(row)
+    )
+  }
+
   toast.add({ title: '삭제 했습니다.', color: 'emerald', timeout: 1500 })
 }
 
@@ -172,10 +204,12 @@ const selectDatabaseTable = (row: SerializeObject) => {
     : 'transportation'
 }
 
-console.log(keepingAllData.value, transportationAllData.value)
+const loadData = () => {
+  loadKeeping(true)
+  loadTransportation(true)
+}
 
-loadKeeping(true)
-loadTransportation(true)
+loadData()
 
 </script>
 
@@ -252,6 +286,7 @@ loadTransportation(true)
     <DialogEditData
       v-model:dialog-trigger="editDataDialogTrigger"
       :select-data="selectButtonData"
+      @update:data="loadData"
     />
   </section>
 </template>

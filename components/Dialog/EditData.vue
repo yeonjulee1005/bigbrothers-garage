@@ -7,6 +7,7 @@ import type { FormSubmitEvent } from '#ui/types'
 
 const toast = useToast()
 
+const { updateData, deleteStorage } = useFetchComposable()
 const { garagePosition } = storeToRefs(useGaragePositionStore())
 const { transporter, transportStatus } = storeToRefs(useTransportOptions())
 
@@ -18,6 +19,10 @@ const dialogTrigger = defineModel('dialogTrigger', {
 const props = defineProps<{
   selectData: SerializeObject
 }>()
+
+const emits = defineEmits([
+  'update:data'
+])
 
 const isKeeping = ref(false)
 const carImageUploadDialogTrigger = ref(false)
@@ -93,27 +98,42 @@ watchEffect(() => {
   }
 })
 
-const submitImage = (bucketName: string, imageUrl: string) => {
-  // 각 스위치 케이스 마다 이미지가 없었을 경우는 그냥 path throw 하고,
+const submitImage = async (bucketName: string, imageUrl: string) => {
   // 만약 이미지가 있을 경우, 기존 이미지는 삭제하는 로직 필요
   switch (bucketName) {
     case 'car_photo' :
-      formData.value.car_photo_name = imageUrl
+      legacyImageInBucket('car_photo', formData.value.car_photo_name, imageUrl)
       break
     case 'extra_photo' :
-      formData.value.extra_photo_name = imageUrl
+      legacyImageInBucket('extra_photo', formData.value.extra_photo_name, imageUrl)
       break
     case 'luggage_photo' :
-      formData.value.luggage_photo_name = imageUrl
+      legacyImageInBucket('luggage_photo', formData.value.luggage_photo_name, imageUrl)
       break
   }
+}
+
+const legacyImageInBucket = (bucketName: string, legacyImageUrl: string, imageUrl: string) => {
+  if (legacyImageUrl) {
+    deleteStorage(bucketName, legacyImageUrl.split(`${bucketName}/`)[1])
+  }
+
+  formData.value[`${bucketName}_name`] = imageUrl
 }
 
 const onSubmit = async (event: FormSubmitEvent<Schema>) => {
   if (!event.isTrusted) { return }
 
-  console.log(formData.value)
+  await updateData(formData.value, props.selectData.id, selectDatabaseTable())
+  emits('update:data')
   toast.add({ title: '보관차량 등록에 성공하였습니다.', color: 'emerald', timeout: 1500 })
+  dialogTrigger.value = false
+}
+
+const selectDatabaseTable = () => {
+  return formData.value.transporter === undefined
+    ? 'keeping'
+    : 'transportation'
 }
 
 </script>
