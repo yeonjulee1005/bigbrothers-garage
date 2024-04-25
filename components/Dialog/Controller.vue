@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+const { loadKeeping, loadTransportation } = useFetchComposable()
 const { garagePosition } = storeToRefs(useGaragePositionStore())
 
 const dialogTrigger = defineModel('dialogTrigger', {
@@ -51,6 +52,11 @@ const openChangeTransporterDialog = () => {
 const openEditDataDialog = () => {
   dialogTrigger.value = false
   editDataDialogTrigger.value = true
+}
+
+const loadData = () => {
+  loadKeeping(false)
+  loadTransportation(false)
 }
 
 </script>
@@ -171,6 +177,7 @@ const openEditDataDialog = () => {
     <DialogEditData
       v-model:dialog-trigger="editDataDialogTrigger"
       :select-data="selectButtonData"
+      @update:data="loadData"
     />
   </div>
 </template>
