@@ -5,12 +5,14 @@ const props = withDefaults(
     modalTrigger?: boolean,
     controller?: boolean,
     modalOverlay?: boolean,
+    modalPreventClose?: boolean,
     title?: string
   }>(),
   {
     modalTrigger: false,
     controller: false,
     modalOverlay: false,
+    modalPreventClose: false,
     title: ''
   }
 )
@@ -50,6 +52,7 @@ watch(() => openTrigger.value, (value) => {
   <BGModal
     v-model="openTrigger"
     :overlay="modalOverlay"
+    :prevent-close="modalPreventClose"
     :ui="modalUiOption"
   >
     <BGCard :ui="modalCardUiOption">
