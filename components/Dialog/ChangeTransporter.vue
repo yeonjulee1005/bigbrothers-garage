@@ -55,6 +55,7 @@ const closeDialog = (trigger:boolean) => {
 <template>
   <ADialog
     :dialog-trigger="dialogTrigger"
+    prevent-close
     title="운송담당자 변정"
     double-first-text="변경"
     double-second-text="닫기"
