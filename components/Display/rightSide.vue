@@ -37,7 +37,6 @@ const selectTransportaionData = (code: string) => {
   return props.transportationData.filter((item: SerializeObject) => item.garagePosition.code === code)[0] ?? props.keepingData.filter((item: SerializeObject) => item.garagePosition.code === code)[0] ?? undefined
 }
 
-
 </script>
 
 <template>

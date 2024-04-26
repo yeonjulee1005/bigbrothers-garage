@@ -47,6 +47,7 @@ defineEmits([
 ])
 
 </script>
+
 <template>
   <BGButton
     :class="customClass"

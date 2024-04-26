@@ -124,9 +124,14 @@ const legacyImageInBucket = (bucketName: string, legacyImageUrl: string, imageUr
 const onSubmit = async (event: FormSubmitEvent<Schema>) => {
   if (!event.isTrusted) { return }
 
+  if (formData.value.transport_status === '0661badf-9160-4dd3-a286-9cb80d2f767b') {
+    formData.value.class = 'line-through dark:bg-red-800 animate-pulse'
+    formData.value.deleted = true
+  }
+
   await updateData(formData.value, props.selectData.id, selectDatabaseTable())
   emits('update:data')
-  toast.add({ title: '보관차량 등록에 성공하였습니다.', color: 'emerald', timeout: 1500 })
+  toast.add({ title: '정보수정을 성공하였습니다.', color: 'emerald', timeout: 1500 })
   dialogTrigger.value = false
 }
 
@@ -142,6 +147,7 @@ const selectDatabaseTable = () => {
   <AModal
     :modal-trigger="dialogTrigger"
     modal-overlay
+    modal-prevent-close
     title="정보 수정"
     @close-dialog="() => dialogTrigger = false"
   >
@@ -368,7 +374,7 @@ const selectDatabaseTable = () => {
       <div class="flex justify-end">
         <AButton
           button-size="lg"
-          :button-text="'등록'"
+          :button-text="'변경'"
           type="submit"
         />
       </div>

@@ -19,16 +19,19 @@ const buttonBackgroundColor = () => {
 
   switch (props.buttonData.transportStatus.code) {
     case 'TPS002' :
-    case 'TPS003' :
       return 'bg-sky-700'
+    case 'TPS003' :
+      return 'bg-emerald-900'
     case 'TPS005' :
       return 'bg-red-900'
     case 'TPS006' :
-      return 'bg-yellow-800'
+      return 'bg-yellow-700'
     case 'TPS007' :
-      return 'bg-violet-900'
+      return 'bg-violet-800'
     case 'TPS008' :
       return 'bg-gray-400'
+    case 'TPS009' :
+      return 'bg-lime-900'
     default:
       return 'bg-sky-400'
   }
