@@ -5,15 +5,12 @@ const { meta, fullPath } = useRoute()
 const { filteredLocations } = useKorLocation()
 
 const locWeatherStore = useLocWeatherStore()
-const { geoX, geoY, currentLocationCode } = storeToRefs(locWeatherStore)
+const { currentLocationCode } = storeToRefs(locWeatherStore)
 const { fetchLivingData, fetchWeatherData } = locWeatherStore
 
 const { loadGaragePosition, loadTransporter, loadTransportStatus } = useFetchComposable()
 
 const initWeatherData = async () => {
-  geoX.value = 54
-  geoY.value = 38
-
   currentLocationCode.value = await filteredLocations(geoX.value, geoY.value)
 
   fetchLivingData()
