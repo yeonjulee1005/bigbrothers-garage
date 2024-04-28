@@ -11,19 +11,16 @@ const { fetchLivingData, fetchWeatherData } = locWeatherStore
 const { loadGaragePosition, loadTransporter, loadTransportStatus } = useFetchComposable()
 
 const initWeatherData = async () => {
-  geoX.value = 54
-  geoY.value = 38
-
   currentLocationCode.value = await filteredLocations(geoX.value, geoY.value)
 
   fetchLivingData()
   fetchWeatherData()
 }
 
-initWeatherData()
 loadGaragePosition()
 loadTransporter()
 loadTransportStatus()
+initWeatherData()
 
 if (import.meta.server) {
   useHead({
