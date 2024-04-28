@@ -20,10 +20,10 @@ const initWeatherData = async () => {
   fetchWeatherData()
 }
 
-initWeatherData()
 loadGaragePosition()
 loadTransporter()
 loadTransportStatus()
+initWeatherData()
 
 if (import.meta.server) {
   useHead({
