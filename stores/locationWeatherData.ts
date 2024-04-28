@@ -21,8 +21,8 @@ export const useLocWeatherStore = defineStore('weatherData', () => {
   const { livingIndexQuery, weatherQuery } = useQuery()
   const { genDateFormat, getLastHour, getMinute } = useUi()
 
-  const geoX = ref<number | undefined>(undefined)
-  const geoY = ref<number | undefined>(undefined)
+  const geoX = ref<number | undefined>(54)
+  const geoY = ref<number | undefined>(38)
   const latitude = ref<number | undefined>(undefined)
   const longitude = ref<number | undefined>(undefined)
   const forecastHour = ref<string>('')
