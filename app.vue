@@ -5,7 +5,7 @@ const { meta, fullPath } = useRoute()
 const { filteredLocations } = useKorLocation()
 
 const locWeatherStore = useLocWeatherStore()
-const { currentLocationCode } = storeToRefs(locWeatherStore)
+const { geoX, geoY, currentLocationCode } = storeToRefs(locWeatherStore)
 const { fetchLivingData, fetchWeatherData } = locWeatherStore
 
 const { loadGaragePosition, loadTransporter, loadTransportStatus } = useFetchComposable()
