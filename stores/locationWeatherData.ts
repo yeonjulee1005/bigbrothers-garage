@@ -52,7 +52,7 @@ export const useLocWeatherStore = defineStore('weatherData', () => {
   }
 
   const fetchWeatherData = async () => {
-    const data: WeatherData = await $fetch(`https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${weatherQuery(genDateFormat('YYYYMMDD'), getForecastHour(), geoX.value ?? 0, geoY.value ?? 38)}`)
+    const data: WeatherData = await $fetch(`https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${weatherQuery(genDateFormat('YYYYMMDD'), getForecastHour(), geoX.value ?? 54, geoY.value ?? 38)}`)
 
     if (!data.response) { return }
     recordWeatherData(data.response.body.items.item)
