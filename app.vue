@@ -17,7 +17,7 @@ const initWeatherData = async () => {
   currentLocationCode.value = await filteredLocations(geoX.value, geoY.value)
 
   fetchLivingData()
-  fetchWeatherData()
+  // fetchWeatherData()
 }
 
 initWeatherData()
